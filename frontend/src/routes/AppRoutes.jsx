@@ -124,6 +124,19 @@ function AppRoutes() {
                     }
                 />
 
+                <Route
+                    path="/stores/:id"
+                    element={
+                        <ProtectedRoute
+                            allowedRoles={[
+                                "NORMAL_USER"
+                            ]}
+                        >
+                            <StoreDetails />
+                        </ProtectedRoute>
+                    }
+                />
+
             </Routes>
 
         </BrowserRouter>
