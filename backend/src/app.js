@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 
 const routes = require("./routes");
+const adminRoutes = require("./modules/admin/admin.routes");
+
 const app = express();
 
 // Middleware
@@ -11,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes
 app.use("/api", routes);
+app.use("/api/admin", adminRoutes);
 
 
 // Health Check Route
