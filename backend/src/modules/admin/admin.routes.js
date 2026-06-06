@@ -2,7 +2,7 @@ const express = require("express");
 
 const authenticate = require("../../middleware/auth.middleware");
 const authorize = require("../../middleware/role.middleware");
-const {getDashboard, getUsers , getStores, createStoreOwner} = require("./admin.controller");
+const {getDashboard, getUsers , getStores, createStoreOwner, createStore} = require("./admin.controller");
 // console.log("getDashboard =", getDashboard);
 // console.log("getUsers =", getUsers);
 // console.log("getStores =", getStores);
@@ -38,6 +38,13 @@ router.post(
     authenticate,
     authorize("ADMIN"),
     createStoreOwner
+);
+
+router.post(
+    "/store",
+    authenticate,
+    authorize("ADMIN"),
+    createStore
 );
 
 module.exports = router;

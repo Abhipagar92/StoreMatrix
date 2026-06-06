@@ -100,4 +100,34 @@ const createStoreOwner = async (req, res) => {
     }
 };
 
-module.exports = { getDashboard, getUsers, getStores, createStoreOwner };
+const createStore = async (req, res) => {
+
+    try {
+
+        await adminService.createStore(
+            req.body
+        );
+
+        return res.status(201).json({
+            success: true,
+            message: "Store Created Successfully"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+
+    }
+};
+
+module.exports = { 
+    getDashboard, 
+    getUsers, 
+    getStores, 
+    createStoreOwner, 
+    createStore };

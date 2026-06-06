@@ -1,6 +1,7 @@
 const db = require("../../config/db");
 const bcrypt = require("bcrypt");
 
+
 const getDashboardSummary = async () => {
 
     const [[users]] = await db.execute(
@@ -22,6 +23,7 @@ const getDashboardSummary = async () => {
         totalRatings: ratings.totalRatings
     };
 };
+
 
 
 const getAllUsers = async () => {
@@ -106,8 +108,45 @@ const createStoreOwner = async (data) => {
     return result;
 };
 
+
+const createStore = async (data) => {
+
+    const {
+        ownerId,
+        name,
+        email,
+        address
+    } = data;
+
+    const [result] = await db.execute(
+        `
+        INSERT INTO stores
+        (
+            owner_id,
+            name,
+            email,
+            address
+        )
+        VALUES (?, ?, ?, ?)
+        `,
+        [
+            ownerId,
+            name,
+            email,
+            address
+        ]
+    );
+
+    return result;
+};
+
 // console.log("SERVICE EXPORT TEST");
 
-module.exports = { getDashboardSummary, getAllUsers, getAllStores, createStoreOwner };
+module.exports = { 
+    getDashboardSummary, 
+    getAllUsers, 
+    getAllStores, 
+    createStoreOwner, 
+    createStore };
 
 // console.log(module.exports);
