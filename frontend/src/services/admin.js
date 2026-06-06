@@ -19,3 +19,20 @@ export const getDashboardSummary =
 
         return response.data;
     };
+
+
+    export const getUsers = async () => {
+
+    const response =
+        await axios.get(
+            `${config.BASE_URL}/admin/users`,
+            {
+                headers: {
+                    Authorization:
+                        `Bearer ${getToken()}`
+                }
+            }
+        );
+
+    return response.data;
+};

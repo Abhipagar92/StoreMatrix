@@ -1,23 +1,21 @@
-import {
-    BrowserRouter,
-    Routes,
-    Route
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 
+import Users from "../pages/admin/Users";
+
 import AdminDashboard
-from "../pages/admin/AdminDashboard";
+    from "../pages/admin/AdminDashboard";
 
 import StoreOwnerDashboard
-from "../pages/owner/StoreOwnerDashboard";
+    from "../pages/owner/StoreOwnerDashboard";
 
 import StoreList
-from "../pages/user/StoreList";
+    from "../pages/user/StoreList";
 
 import ProtectedRoute
-from "../components/common/ProtectedRoute";
+    from "../components/common/ProtectedRoute";
 
 function AppRoutes() {
 
@@ -72,6 +70,17 @@ function AppRoutes() {
                             ]}
                         >
                             <StoreList />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/users"
+                    element={
+                        <ProtectedRoute
+                            allowedRoles={["ADMIN"]}
+                        >
+                            <Users />
                         </ProtectedRoute>
                     }
                 />
