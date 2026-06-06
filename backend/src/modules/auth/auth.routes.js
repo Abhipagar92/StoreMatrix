@@ -1,5 +1,6 @@
 const express = require("express");
 const validate = require("../../middleware/validate.middleware");
+const authenticate = require("../../middleware/auth.middleware");
 
 const { login, register} = require("./auth.controller");
 const { registerValidation } = require("./auth.validation");
@@ -14,6 +15,19 @@ router.get("/test", (req, res) => {
         message: "Auth route working"
     });
 });
+
+router.get(
+    "/profile",
+    authenticate,
+    (req, res) => {
+
+        res.status(200).json({
+            success: true,
+            user: req.user
+        });
+
+    }
+);
 
 
 module.exports = router;

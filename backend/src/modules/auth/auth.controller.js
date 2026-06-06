@@ -18,12 +18,18 @@ const login = async (req, res) => {
             });
         }
 
-        let isValid = false;
+        // let isValid = false;
 
-        // Temporary for current admin123 data
-        if (user.password === password) {
-            isValid = true;
-        }
+        // // Temporary for current admin123 data
+        // if (user.password === password) {
+        //     isValid = true;
+        // }
+
+        const isValid =
+            await authService.validatePassword(
+                password,
+                user.password
+            );
 
         // Future bcrypt version
         // isValid = await authService.validatePassword(
