@@ -19,6 +19,8 @@ import ProtectedRoute
 
 import Stores from "../pages/admin/Stores";
 
+import CreateStoreOwner from "../pages/admin/CreateStoreOwner";
+
 function AppRoutes() {
 
     return (
@@ -94,6 +96,17 @@ function AppRoutes() {
                             allowedRoles={["ADMIN"]}
                         >
                             <Stores />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/store-owner"
+                    element={
+                        <ProtectedRoute
+                            allowedRoles={["ADMIN"]}
+                        >
+                            <CreateStoreOwner />
                         </ProtectedRoute>
                     }
                 />
