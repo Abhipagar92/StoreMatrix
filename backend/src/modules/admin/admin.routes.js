@@ -1,14 +1,11 @@
 const express = require("express");
 
-const authenticate =
-    require("../../middleware/auth.middleware");
+const authenticate = require("../../middleware/auth.middleware");
+const authorize = require("../../middleware/role.middleware");
+const {getDashboard, getUsers } = require("./admin.controller");
+// console.log("getDashboard =", getDashboard);
+// console.log("getUsers =", getUsers);
 
-const authorize =
-    require("../../middleware/role.middleware");
-
-const {
-    getDashboard
-} = require("./admin.controller");
 
 const router = express.Router();
 
@@ -17,6 +14,13 @@ router.get(
     authenticate,
     authorize("ADMIN"),
     getDashboard
+);
+
+router.get(
+    "/users",
+    authenticate,
+    authorize("ADMIN"),
+    getUsers
 );
 
 module.exports = router;

@@ -14,6 +14,7 @@ const getDashboardSummary = async () => {
         "SELECT COUNT(*) AS totalRatings FROM ratings"
     );
 
+
     return {
         totalUsers: users.totalUsers,
         totalStores: stores.totalStores,
@@ -21,6 +22,29 @@ const getDashboardSummary = async () => {
     };
 };
 
-module.exports = {
-    getDashboardSummary
+
+const getAllUsers = async () => {
+
+    const [users] = await db.execute(
+        `
+        SELECT
+            user_id,
+            name,
+            email,
+            address,
+            role,
+            status,
+            created_at
+        FROM users
+        ORDER BY user_id DESC
+        `
+    );
+
+    return users;
 };
+
+console.log("SERVICE EXPORT TEST");
+
+module.exports = { getDashboardSummary, getAllUsers };
+
+console.log(module.exports);
