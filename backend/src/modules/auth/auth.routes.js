@@ -1,6 +1,8 @@
 const express = require("express");
 const validate = require("../../middleware/validate.middleware");
 const authenticate = require("../../middleware/auth.middleware");
+const authorize = require("../../middleware/role.middleware");
+
 
 const { login, register} = require("./auth.controller");
 const { registerValidation } = require("./auth.validation");
@@ -24,6 +26,21 @@ router.get(
         res.status(200).json({
             success: true,
             user: req.user
+        });
+
+    }
+);
+
+
+router.get(
+    "/admin-test",
+    authenticate,
+    authorize("ADMIN"),
+    (req, res) => {
+
+        res.json({
+            success: true,
+            message: "Welcome Admin"
         });
 
     }
