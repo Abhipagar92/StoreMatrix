@@ -26,6 +26,30 @@ const addRating = async (
     return result;
 };
 
+const updateRating = async (
+    userId,
+    storeId,
+    rating
+) => {
+
+    const [result] = await db.execute(
+        `
+        UPDATE ratings
+        SET rating = ?
+        WHERE user_id = ?
+        AND store_id = ?
+        `,
+        [
+            rating,
+            userId,
+            storeId
+        ]
+    );
+
+    return result;
+};
+
 module.exports = {
-    addRating
+    addRating,
+    updateRating
 };

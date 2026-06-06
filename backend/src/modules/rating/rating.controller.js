@@ -36,6 +36,38 @@ const createRating = async (req, res) => {
     }
 };
 
+
+const updateRating = async (req, res) => {
+
+    try {
+
+        const { rating } = req.body;
+
+        await ratingService.updateRating(
+            req.user.userId,
+            req.params.storeId,
+            rating
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "Rating Updated Successfully"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+
+    }
+};
+
 module.exports = {
-    createRating
+    createRating,
+    updateRating
+    
 };
