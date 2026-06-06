@@ -1,6 +1,7 @@
 const authService = require("./auth.service");
 const { generateToken } = require("../../utils/jwt");
 
+// Login Controller
 const login = async (req, res) => {
 
     try {
@@ -67,6 +68,44 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = {
-    login
+
+// Registration Controller
+const register = async (req, res) => {
+
+    try {
+
+        const user =
+            await authService.findUserByEmail(
+                req.body.email
+            );
+
+        if (user) {
+            return res.status(409).json({
+                success: false,
+                message: "Email already exists"
+            });
+        }
+
+        await authService.registerUser(
+            req.body
+        );
+
+        return res.status(201).json({
+            success: true,
+            message: "Registration Successful"
+        });
+
+    }
+    catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+
+    }
 };
+
+module.exports = {login, register };

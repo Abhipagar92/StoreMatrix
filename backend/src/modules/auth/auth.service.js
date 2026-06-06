@@ -21,7 +21,40 @@ const validatePassword = async (
     );
 };
 
-module.exports = {
-    findUserByEmail,
-    validatePassword
+const registerUser = async (userData) => {
+
+    const {
+        name,
+        email,
+        password,
+        address
+    } = userData;
+
+    const hashedPassword =
+        await bcrypt.hash(password, 10);
+
+    const [result] = await db.execute(
+        `
+        INSERT INTO users
+       (
+            name,
+            email,
+            password,
+            address,
+            role
+        )
+        VALUES (?, ?, ?, ?, ?)
+        `,
+        [
+            name,
+            email,
+            hashedPassword,
+            address,
+            "NORMAL_USER"
+        ]
+    );
+
+    return result;
 };
+
+module.exports = {registerUser,findUserByEmail,validatePassword };
