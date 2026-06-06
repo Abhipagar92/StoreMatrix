@@ -7,9 +7,22 @@ import {
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 
+import AdminDashboard
+from "../pages/admin/AdminDashboard";
+
+import StoreOwnerDashboard
+from "../pages/owner/StoreOwnerDashboard";
+
+import StoreList
+from "../pages/user/StoreList";
+
+import ProtectedRoute
+from "../components/common/ProtectedRoute";
+
 function AppRoutes() {
 
     return (
+
         <BrowserRouter>
 
             <Routes>
@@ -24,9 +37,49 @@ function AppRoutes() {
                     element={<Register />}
                 />
 
+                <Route
+                    path="/admin/dashboard"
+                    element={
+                        <ProtectedRoute
+                            allowedRoles={[
+                                "ADMIN"
+                            ]}
+                        >
+                            <AdminDashboard />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/owner/dashboard"
+                    element={
+                        <ProtectedRoute
+                            allowedRoles={[
+                                "STORE_OWNER"
+                            ]}
+                        >
+                            <StoreOwnerDashboard />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/stores"
+                    element={
+                        <ProtectedRoute
+                            allowedRoles={[
+                                "NORMAL_USER"
+                            ]}
+                        >
+                            <StoreList />
+                        </ProtectedRoute>
+                    }
+                />
+
             </Routes>
 
         </BrowserRouter>
+
     );
 }
 
