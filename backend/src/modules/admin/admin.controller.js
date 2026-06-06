@@ -125,9 +125,70 @@ const createStore = async (req, res) => {
     }
 };
 
+
+const deleteStore = async (req, res) => {
+
+    try {
+
+        await adminService.deleteStore(
+            req.params.id
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "Store Deleted Successfully"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+
+    }
+};
+
+const deleteUser = async (req, res) => {
+
+    try {
+
+        if (req.user.userId == req.params.id) {
+            return res.status(400).json({
+                success: false,
+                message: "Admin cannot delete own account"
+            });
+        }
+
+        await adminService.deleteUser(
+            req.params.id
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "User Deleted Successfully"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+
+    }
+};
+
 module.exports = { 
     getDashboard, 
     getUsers, 
     getStores, 
     createStoreOwner, 
-    createStore };
+    createStore,
+    deleteStore,
+    deleteUser
+ };

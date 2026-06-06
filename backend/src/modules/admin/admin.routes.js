@@ -1,14 +1,29 @@
 const express = require("express");
 
+
 const authenticate = require("../../middleware/auth.middleware");
 const authorize = require("../../middleware/role.middleware");
-const {getDashboard, getUsers , getStores, createStoreOwner, createStore} = require("./admin.controller");
+
+
+const {
+    getDashboard, 
+    getUsers , 
+    getStores, 
+    createStoreOwner, 
+    createStore, 
+    deleteStore,
+    deleteUser
+} = require("./admin.controller");
+
+
 // console.log("getDashboard =", getDashboard);
 // console.log("getUsers =", getUsers);
 // console.log("getStores =", getStores);
 
 
 const router = express.Router();
+
+
 
 router.get(
     "/dashboard",
@@ -46,5 +61,22 @@ router.post(
     authorize("ADMIN"),
     createStore
 );
+
+
+router.delete(
+    "/stores/:id",
+    authenticate,
+    authorize("ADMIN"),
+    deleteStore
+);
+
+router.delete(
+    "/users/:id",
+    authenticate,
+    authorize("ADMIN"),
+    deleteUser
+);
+
+
 
 module.exports = router;

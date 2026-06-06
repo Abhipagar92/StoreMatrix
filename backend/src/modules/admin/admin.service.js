@@ -140,6 +140,34 @@ const createStore = async (data) => {
     return result;
 };
 
+
+const deleteStore = async (storeId) => {
+
+    const [result] = await db.execute(
+        `
+        DELETE FROM stores
+        WHERE store_id = ?
+        `,
+        [storeId]
+    );
+
+    return result;
+};
+
+
+const deleteUser = async (userId) => {
+
+    const [result] = await db.execute(
+        `
+        DELETE FROM users
+        WHERE user_id = ?
+        `,
+        [userId]
+    );
+
+    return result;
+};
+
 // console.log("SERVICE EXPORT TEST");
 
 module.exports = { 
@@ -147,6 +175,9 @@ module.exports = {
     getAllUsers, 
     getAllStores, 
     createStoreOwner, 
-    createStore };
+    createStore,
+    deleteStore,
+    deleteUser
+ };
 
 // console.log(module.exports);
