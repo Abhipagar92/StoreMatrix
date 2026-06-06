@@ -4,7 +4,8 @@ const authenticate =
 require("../../middleware/auth.middleware");
 
 const {
-    createRating, updateRating
+    createRating, 
+    updateRating
 } = require("./rating.controller");
 
 const router = express.Router();
