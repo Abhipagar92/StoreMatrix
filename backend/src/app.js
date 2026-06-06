@@ -4,6 +4,7 @@ const cors = require("cors");
 const routes = require("./routes");
 const adminRoutes = require("./modules/admin/admin.routes");
 const storeRoutes = require("./modules/store/store.routes");
+const ratingRoutes = require("./modules/rating/rating.routes");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", routes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/stores", storeRoutes);
+app.use("/api/ratings", ratingRoutes);
 
 
 // Health Check Route
