@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { getStores , searchStores } = require("./store.controller");
+const { getStores , searchStores, getStoreDetails } = require("./store.controller");
 
 const router = express.Router();
 
@@ -12,6 +12,12 @@ router.get(
 router.get(
     "/search",
     searchStores
+);
+
+router.get(
+    "/:id",
+    getStoreDetails
+    
 );
 
 module.exports = router;
