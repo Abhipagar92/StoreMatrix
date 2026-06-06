@@ -43,8 +43,31 @@ const getAllUsers = async () => {
     return users;
 };
 
-console.log("SERVICE EXPORT TEST");
 
-module.exports = { getDashboardSummary, getAllUsers };
+//
+const getAllStores = async () => {
 
-console.log(module.exports);
+    const [stores] = await db.execute(
+        `
+        SELECT
+            s.store_id,
+            s.name,
+            s.email,
+            s.address,
+            s.status,
+            u.name AS owner_name
+        FROM stores s
+        JOIN users u
+            ON s.owner_id = u.user_id
+        ORDER BY s.store_id DESC
+        `
+    );
+
+    return stores;
+};
+
+// console.log("SERVICE EXPORT TEST");
+
+module.exports = { getDashboardSummary, getAllUsers, getAllStores };
+
+// console.log(module.exports);

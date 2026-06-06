@@ -1,5 +1,5 @@
 const adminService = require("./admin.service");
-console.log("ADMIN SERVICE =>", adminService);
+// console.log("ADMIN SERVICE =>", adminService);
 
 const getDashboard = async (req, res) => {
 
@@ -49,4 +49,29 @@ const getUsers = async (req, res) => {
     }
 };
 
-module.exports = { getDashboard, getUsers };
+
+const getStores = async (req, res) => {
+
+    try {
+
+        const stores =
+            await adminService.getAllStores();
+
+        return res.status(200).json({
+            success: true,
+            data: stores
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+
+    }
+};
+
+module.exports = { getDashboard, getUsers, getStores };

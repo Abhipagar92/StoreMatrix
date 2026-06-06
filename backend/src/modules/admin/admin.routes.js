@@ -2,9 +2,10 @@ const express = require("express");
 
 const authenticate = require("../../middleware/auth.middleware");
 const authorize = require("../../middleware/role.middleware");
-const {getDashboard, getUsers } = require("./admin.controller");
+const {getDashboard, getUsers , getStores} = require("./admin.controller");
 // console.log("getDashboard =", getDashboard);
 // console.log("getUsers =", getUsers);
+// console.log("getStores =", getStores);
 
 
 const router = express.Router();
@@ -21,6 +22,14 @@ router.get(
     authenticate,
     authorize("ADMIN"),
     getUsers
+);
+
+
+router.get(
+    "/stores",
+    authenticate,
+    authorize("ADMIN"),
+    getStores
 );
 
 module.exports = router;
