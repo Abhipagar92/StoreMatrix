@@ -5,7 +5,7 @@ const authorize = require("../../middleware/role.middleware");
 
 
 const { login, register, changePassword } = require("./auth.controller");
-console.log(changePassword);
+// console.log(changePassword);
 const { registerValidation } = require("./auth.validation");
 
 
