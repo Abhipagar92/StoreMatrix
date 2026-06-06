@@ -17,6 +17,8 @@ import StoreList
 import ProtectedRoute
     from "../components/common/ProtectedRoute";
 
+import Stores from "../pages/admin/Stores";
+
 function AppRoutes() {
 
     return (
@@ -81,6 +83,17 @@ function AppRoutes() {
                             allowedRoles={["ADMIN"]}
                         >
                             <Users />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/stores"
+                    element={
+                        <ProtectedRoute
+                            allowedRoles={["ADMIN"]}
+                        >
+                            <Stores />
                         </ProtectedRoute>
                     }
                 />
