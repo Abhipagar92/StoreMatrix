@@ -57,4 +57,27 @@ const registerUser = async (userData) => {
     return result;
 };
 
-module.exports = {registerUser,findUserByEmail,validatePassword };
+const updatePassword = async (
+    userId,
+    newPassword
+) => {
+
+    const hashedPassword =
+        await bcrypt.hash(newPassword, 10);
+
+    const [result] = await db.execute(
+        `
+        UPDATE users
+        SET password = ?
+        WHERE user_id = ?
+        `,
+        [
+            hashedPassword,
+            userId
+        ]
+    );
+
+    return result;
+};
+
+module.exports = {registerUser,findUserByEmail,validatePassword,updatePassword}; 

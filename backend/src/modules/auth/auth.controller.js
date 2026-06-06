@@ -114,4 +114,50 @@ const register = async (req, res) => {
     }
 };
 
-module.exports = {login, register };
+const changePassword = async (req, res) => {
+
+    try {
+
+        const { oldPassword, newPassword } = req.body;
+
+        const user =
+            await authService.findUserByEmail(
+                req.user.email
+            );
+
+        const isValid =
+            await authService.validatePassword(
+                oldPassword,
+                user.password
+            );
+
+        if (!isValid) {
+            return res.status(400).json({
+                success: false,
+                message: "Old Password is Incorrect"
+            });
+        }
+
+        await authService.updatePassword(
+            user.user_id,
+            newPassword
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "Password Changed Successfully"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+
+    }
+};
+
+module.exports = {login, register , changePassword};
