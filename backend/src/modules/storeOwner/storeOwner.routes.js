@@ -12,6 +12,7 @@ const {
 
 const router = express.Router();
 
+// Store Owner Dashboard
 router.get(
     "/dashboard",
     authenticate,
