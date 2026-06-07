@@ -1,10 +1,17 @@
 import { useState } from "react";
 
+import { toast } from "react-toastify";
+
+import Header from "../../components/common/Header";
+
 import {
     createStoreOwner
 } from "../../services/admin";
 
 function CreateStoreOwner() {
+
+    const [loading, setLoading] =
+        useState(false);
 
     const [formData, setFormData] =
         useState({
@@ -23,87 +30,168 @@ function CreateStoreOwner() {
 
     };
 
-    const handleSubmit =
-        async () => {
+    const handleSubmit = async () => {
 
-            try {
+        try {
 
-                const result =
-                    await createStoreOwner(
-                        formData
-                    );
+            if (
+                !formData.name.trim() ||
+                !formData.email.trim() ||
+                !formData.password.trim() ||
+                !formData.address.trim()
+            ) {
 
-                alert(
-                    result.message
+                toast.warning(
+                    "Please fill all fields"
                 );
 
-                setFormData({
-                    name: "",
-                    email: "",
-                    password: "",
-                    address: ""
-                });
-
-            } catch (error) {
-
-                alert(
-                    error?.response?.data?.message ||
-                    "Failed"
-                );
+                return;
 
             }
 
-        };
+            setLoading(true);
+
+            const result =
+                await createStoreOwner(
+                    formData
+                );
+
+            toast.success(
+                result.message
+            );
+
+            setFormData({
+                name: "",
+                email: "",
+                password: "",
+                address: ""
+            });
+
+        } catch (error) {
+
+            toast.error(
+                error?.response?.data?.message ||
+                "Failed to Create Store Owner"
+            );
+
+        } finally {
+
+            setLoading(false);
+
+        }
+
+    };
 
     return (
 
-        <div className="container mt-5">
+        <>
+            <Header />
 
-            <h2>
-                Create Store Owner
-            </h2>
+            <div className="container mt-5">
 
-            <input
-                className="form-control mb-3"
-                name="name"
-                placeholder="Name"
-                value={formData.name}
-                onChange={handleChange}
-            />
+                <div className="row justify-content-center">
 
-            <input
-                className="form-control mb-3"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-            />
+                    <div className="col-md-6">
 
-            <input
-                type="password"
-                className="form-control mb-3"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-            />
+                        <div className="card shadow">
 
-            <textarea
-                className="form-control mb-3"
-                name="address"
-                placeholder="Address"
-                value={formData.address}
-                onChange={handleChange}
-            />
+                            <div className="card-body p-4">
 
-            <button
-                className="btn btn-primary"
-                onClick={handleSubmit}
-            >
-                Create Owner
-            </button>
+                                <h2 className="text-center mb-4">
+                                    Create Store Owner
+                                </h2>
 
-        </div>
+                                <div className="mb-3">
+
+                                    <label className="form-label">
+                                        Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        className="form-control"
+                                        placeholder="Enter Name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="mb-3">
+
+                                    <label className="form-label">
+                                        Email
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        className="form-control"
+                                        placeholder="Enter Email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="mb-3">
+
+                                    <label className="form-label">
+                                        Password
+                                    </label>
+
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        className="form-control"
+                                        placeholder="Enter Password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="mb-4">
+
+                                    <label className="form-label">
+                                        Address
+                                    </label>
+
+                                    <textarea
+                                        name="address"
+                                        className="form-control"
+                                        rows="3"
+                                        placeholder="Enter Address"
+                                        value={formData.address}
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <button
+                                    className="btn btn-primary w-100"
+                                    onClick={handleSubmit}
+                                    disabled={loading}
+                                >
+                                    {
+                                        loading
+                                            ? "Creating..."
+                                            : "Create Store Owner"
+                                    }
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </>
 
     );
 }
