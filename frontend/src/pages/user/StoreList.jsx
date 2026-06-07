@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 
+import Header from "../../components/common/Header";
 import StoreCard from "../../components/store/StoreCard";
 
-import {  getStores } from "../../services/store";
+import { getStores } from "../../services/store";
 
 function StoreList() {
 
     const [stores, setStores] =
         useState([]);
+
+    const [search, setSearch] =
+        useState("");
 
     useEffect(() => {
 
@@ -28,6 +32,8 @@ function StoreList() {
 
         } catch (error) {
 
+            console.log(error);
+
             alert(
                 "Failed to Load Stores"
             );
@@ -36,38 +42,78 @@ function StoreList() {
 
     };
 
+    const filteredStores =
+        stores.filter(
+            (store) =>
+                store.name
+                    .toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    )
+        );
+
     return (
 
-        <div className="container mt-5">
+        <>
+            <Header />
 
-            <h2 className="mb-4">
-                Available Stores
-            </h2>
+            <div className="container mt-5">
 
-            <div className="row">
+                <h2 className="mb-4">
+                    Available Stores
+                </h2>
+
+                <input
+                    type="text"
+                    className="form-control mb-4"
+                    placeholder="Search Stores..."
+                    value={search}
+                    onChange={(e) =>
+                        setSearch(
+                            e.target.value
+                        )
+                    }
+                />
 
                 {
-                    stores.map(
-                        (store) => (
+                    filteredStores.length === 0 && (
 
-                            <div
-                                className="col-md-4 mb-4"
-                                key={store.store_id}
-                            >
+                        <div className="alert alert-warning">
 
-                                <StoreCard
-                                    store={store}
-                                />
+                            No Stores Found
 
-                            </div>
+                        </div>
 
-                        )
                     )
                 }
 
-            </div>
+                <div className="row">
 
-        </div>
+                    {
+                        filteredStores.map(
+                            (store) => (
+
+                                <div
+                                    className="col-md-4 mb-4"
+                                    key={
+                                        store.store_id
+                                    }
+                                >
+
+                                    <StoreCard
+                                        store={store}
+                                    />
+
+                                </div>
+
+                            )
+                        )
+                    }
+
+                </div>
+
+            </div>
+        </>
 
     );
 }
