@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
-import {
-    getDashboardSummary
-} from "../../services/admin";
+import { getDashboardSummary } from "../../services/admin";
+import Header from "../../components/common/Header";
 
 function AdminDashboard() {
 
@@ -45,73 +44,73 @@ function AdminDashboard() {
 
     return (
 
-        <div className="container mt-5">
+        <>
 
-            <h2 className="mb-4">
-                Admin Dashboard
-            </h2>
+            <Header />
 
-            <div className="row">
+            <div className="container mt-4">
 
-                <div className="col-md-4">
+                <h2 className="mb-4">
+                    Admin Dashboard
+                </h2>
 
-                    <div className="card text-center shadow">
+                <div className="row">
 
-                        <div className="card-body">
+                    <div className="col-md-4">
 
-                            <h5>
-                                Total Users
-                            </h5>
+                        <div className="card text-center shadow">
 
-                            <h2>
-                                {
-                                    summary.totalUsers
-                                }
-                            </h2>
+                            <div className="card-body">
 
-                        </div>
+                                <h5>
+                                    Total Users
+                                </h5>
 
-                    </div>
+                                <h2>
+                                    {summary.totalUsers}
+                                </h2>
 
-                </div>
-
-                <div className="col-md-4">
-
-                    <div className="card text-center shadow">
-
-                        <div className="card-body">
-
-                            <h5>
-                                Total Stores
-                            </h5>
-
-                            <h2>
-                                {
-                                    summary.totalStores
-                                }
-                            </h2>
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
+                    <div className="col-md-4">
 
-                <div className="col-md-4">
+                        <div className="card text-center shadow">
 
-                    <div className="card text-center shadow">
+                            <div className="card-body">
 
-                        <div className="card-body">
+                                <h5>
+                                    Total Stores
+                                </h5>
 
-                            <h5>
-                                Total Ratings
-                            </h5>
+                                <h2>
+                                    {summary.totalStores}
+                                </h2>
 
-                            <h2>
-                                {
-                                    summary.totalRatings
-                                }
-                            </h2>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div className="col-md-4">
+
+                        <div className="card text-center shadow">
+
+                            <div className="card-body">
+
+                                <h5>
+                                    Total Ratings
+                                </h5>
+
+                                <h2>
+                                    {summary.totalRatings}
+                                </h2>
+
+                            </div>
 
                         </div>
 
@@ -121,9 +120,11 @@ function AdminDashboard() {
 
             </div>
 
-        </div>
+        </>
 
     );
+
+
 }
 
 export default AdminDashboard;
