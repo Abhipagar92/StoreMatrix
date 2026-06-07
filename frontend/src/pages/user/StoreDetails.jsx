@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 import Header from "../../components/common/Header";
-import { getStoreDetails } from "../../services/store";
-import { submitRating } from "../../services/rating";
 import Loader from "../../components/common/Loader";
+
+import {
+    getStoreDetails
+} from "../../services/store";
+
+import {
+    submitRating
+} from "../../services/rating";
 
 function StoreDetails() {
 
@@ -12,6 +20,9 @@ function StoreDetails() {
 
     const [store, setStore] =
         useState(null);
+
+    const [loading, setLoading] =
+        useState(true);
 
     const [rating, setRating] =
         useState(0);
@@ -37,51 +48,67 @@ function StoreDetails() {
 
             console.log(error);
 
-            alert(
+            toast.error(
                 "Failed to Load Store Details"
+            );
+
+        } finally {
+
+            setLoading(false);
+
+        }
+
+    };
+
+    const handleRating = async () => {
+
+        if (!rating) {
+
+            toast.warning(
+                "Please select a rating"
+            );
+
+            return;
+
+        }
+
+        try {
+
+            const result =
+                await submitRating(
+                    id,
+                    rating
+                );
+
+            toast.success(
+                result.message
+            );
+
+            loadStore();
+
+        } catch (error) {
+
+            toast.error(
+                error?.response?.data?.message ||
+                "Failed to Submit Rating"
             );
 
         }
 
     };
 
-    const handleRating =
-        async () => {
+    if (loading) {
 
-            if (!rating) {
+        return (
 
-                alert(
-                    "Please select a rating"
-                );
+            <>
+                <Header />
+                <Loader />
+            </>
 
-                return;
+        );
 
-            }
-
-            try {
-
-                const result =
-                    await submitRating(
-                        id,
-                        rating
-                    );
-
-                alert(
-                    result.message
-                );
-
-                loadStore();
-
-            } catch (error) {
-
-                alert(
-                    error?.response?.data?.message ||
-                    "Failed to Submit Rating"
-                );
-
-            }
-
-        };
+    }
 
     if (!store) {
 
@@ -89,7 +116,17 @@ function StoreDetails() {
 
             <>
                 <Header />
-                <Loader />
+
+                <div className="container mt-5">
+
+                    <div className="alert alert-warning">
+
+                        Store Not Found
+
+                    </div>
+
+                </div>
+
             </>
 
         );
@@ -107,75 +144,113 @@ function StoreDetails() {
 
                     <div className="col-md-8">
 
-                        <div className="card shadow p-4">
+                        <div className="card shadow">
 
-                            <h2 className="mb-3">
-                                {store.name}
-                            </h2>
+                            <div className="card-body p-4">
 
-                            <p className="text-muted">
-                                {store.address}
-                            </p>
+                                <h2 className="mb-3">
+                                    {store.name}
+                                </h2>
 
-                            <hr />
+                                <p className="text-muted">
+                                    {store.address}
+                                </p>
 
-                            <h4>
-                                ⭐ Average Rating:
-                                {" "}
-                                {store.averageRating}
-                            </h4>
+                                <hr />
 
-                            <p>
-                                Total Ratings:
-                                {" "}
-                                {store.totalRatings}
-                            </p>
+                                <div className="row mb-4">
 
-                            <hr />
+                                    <div className="col-md-6">
 
-                            <h5 className="mb-3">
-                                Rate This Store
-                            </h5>
+                                        <div className="card text-center border-0 bg-light">
 
-                            <div className="mb-4">
+                                            <div className="card-body">
 
-                                {
-                                    [1, 2, 3, 4, 5].map(
-                                        (star) => (
+                                                <h5>
+                                                    Average Rating
+                                                </h5>
 
-                                            <span
-                                                key={star}
-                                                onClick={() =>
-                                                    setRating(
-                                                        star
-                                                    )
-                                                }
-                                                style={{
-                                                    cursor: "pointer",
-                                                    fontSize: "35px",
-                                                    color:
-                                                        star <= rating
-                                                            ? "gold"
-                                                            : "#ccc"
-                                                }}
-                                            >
-                                                ★
-                                            </span>
+                                                <h2 className="text-warning">
 
+                                                    ⭐ {store.averageRating}
+
+                                                </h2>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div className="col-md-6">
+
+                                        <div className="card text-center border-0 bg-light">
+
+                                            <div className="card-body">
+
+                                                <h5>
+                                                    Total Ratings
+                                                </h5>
+
+                                                <h2 className="text-primary">
+
+                                                    {store.totalRatings}
+
+                                                </h2>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <hr />
+
+                                <h4 className="mb-3">
+                                    Rate This Store
+                                </h4>
+
+                                <div className="mb-4">
+
+                                    {
+                                        [1, 2, 3, 4, 5].map(
+                                            (star) => (
+
+                                                <span
+                                                    key={star}
+                                                    onClick={() =>
+                                                        setRating(
+                                                            star
+                                                        )
+                                                    }
+                                                    style={{
+                                                        cursor: "pointer",
+                                                        fontSize: "40px",
+                                                        color:
+                                                            star <= rating
+                                                                ? "#ffc107"
+                                                                : "#dee2e6"
+                                                    }}
+                                                >
+                                                    ★
+                                                </span>
+
+                                            )
                                         )
-                                    )
-                                }
+                                    }
+
+                                </div>
+
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={handleRating}
+                                >
+                                    Submit Rating
+                                </button>
 
                             </div>
-
-                            <button
-                                className="btn btn-primary"
-                                onClick={
-                                    handleRating
-                                }
-                            >
-                                Submit Rating
-                            </button>
 
                         </div>
 
