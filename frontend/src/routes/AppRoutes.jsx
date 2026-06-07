@@ -23,6 +23,8 @@ import CreateStoreOwner from "../pages/admin/CreateStoreOwner";
 
 import CreateStore from "../pages/admin/CreateStore";
 
+import StoreDetails from "../pages/user/StoreDetails";
+
 function AppRoutes() {
 
     return (
@@ -128,9 +130,7 @@ function AppRoutes() {
                     path="/stores/:id"
                     element={
                         <ProtectedRoute
-                            allowedRoles={[
-                                "NORMAL_USER"
-                            ]}
+                            allowedRoles={["NORMAL_USER"]}
                         >
                             <StoreDetails />
                         </ProtectedRoute>
