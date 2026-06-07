@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+import { toast } from "react-toastify";
+
+import Header from "../../components/common/Header";
+
 import {
     getUsers,
     createStore
@@ -9,6 +13,9 @@ function CreateStore() {
 
     const [owners, setOwners] =
         useState([]);
+
+    const [loading, setLoading] =
+        useState(false);
 
     const [formData, setFormData] =
         useState({
@@ -38,11 +45,17 @@ function CreateStore() {
                         "STORE_OWNER"
                 );
 
-            setOwners(storeOwners);
+            setOwners(
+                storeOwners
+            );
 
         } catch (error) {
 
             console.log(error);
+
+            toast.error(
+                "Failed to Load Store Owners"
+            );
 
         }
 
@@ -63,12 +76,70 @@ function CreateStore() {
 
             try {
 
+                if (
+                    !formData.ownerId ||
+                    !formData.name.trim() ||
+                    !formData.email.trim() ||
+                    !formData.address.trim()
+                ) {
+
+                    toast.warning(
+                        "Please fill all fields"
+                    );
+
+                    return;
+
+                }
+
+                if (
+                    formData.name.trim().length < 3
+                ) {
+
+                    toast.error(
+                        "Store name must be at least 3 characters"
+                    );
+
+                    return;
+
+                }
+
+                const emailRegex =
+                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (
+                    !emailRegex.test(
+                        formData.email
+                    )
+                ) {
+
+                    toast.error(
+                        "Please enter a valid email"
+                    );
+
+                    return;
+
+                }
+
+                if (
+                    formData.address.trim().length < 5
+                ) {
+
+                    toast.error(
+                        "Address must be at least 5 characters"
+                    );
+
+                    return;
+
+                }
+
+                setLoading(true);
+
                 const result =
                     await createStore(
                         formData
                     );
 
-                alert(
+                toast.success(
                     result.message
                 );
 
@@ -81,10 +152,14 @@ function CreateStore() {
 
             } catch (error) {
 
-                alert(
+                toast.error(
                     error?.response?.data?.message ||
-                    "Failed"
+                    "Failed to Create Store"
                 );
+
+            } finally {
+
+                setLoading(false);
 
             }
 
@@ -92,78 +167,140 @@ function CreateStore() {
 
     return (
 
-        <div className="container mt-5">
+        <>
+            <Header />
 
-            <h2>
-                Create Store
-            </h2>
+            <div className="container mt-5">
 
-            <select
-                className="form-control mb-3"
-                name="ownerId"
-                value={formData.ownerId}
-                onChange={handleChange}
-            >
+                <div className="row justify-content-center">
 
-                <option value="">
-                    Select Store Owner
-                </option>
+                    <div className="col-md-7">
 
-                {
-                    owners.map(
-                        (owner) => (
+                        <div className="card shadow">
 
-                            <option
-                                key={
-                                    owner.user_id
-                                }
-                                value={
-                                    owner.user_id
-                                }
-                            >
-                                {owner.name}
-                            </option>
+                            <div className="card-body p-4">
 
-                        )
-                    )
-                }
+                                <h2 className="text-center mb-4">
+                                    Create Store
+                                </h2>
 
-            </select>
+                                <div className="mb-3">
 
-            <input
-                className="form-control mb-3"
-                placeholder="Store Name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-            />
+                                    <label className="form-label">
+                                        Store Owner
+                                    </label>
 
-            <input
-                className="form-control mb-3"
-                placeholder="Store Email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-            />
+                                    <select
+                                        className="form-control"
+                                        name="ownerId"
+                                        value={formData.ownerId}
+                                        onChange={handleChange}
+                                    >
 
-            <textarea
-                className="form-control mb-3"
-                placeholder="Store Address"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-            />
+                                        <option value="">
+                                            Select Store Owner
+                                        </option>
 
-            <button
-                className="btn btn-success"
-                onClick={handleSubmit}
-            >
-                Create Store
-            </button>
+                                        {
+                                            owners.map(
+                                                (owner) => (
 
-        </div>
+                                                    <option
+                                                        key={
+                                                            owner.user_id
+                                                        }
+                                                        value={
+                                                            owner.user_id
+                                                        }
+                                                    >
+                                                        {owner.name}
+                                                    </option>
+
+                                                )
+                                            )
+                                        }
+
+                                    </select>
+
+                                </div>
+
+                                <div className="mb-3">
+
+                                    <label className="form-label">
+                                        Store Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Enter Store Name"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="mb-3">
+
+                                    <label className="form-label">
+                                        Store Email
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        placeholder="Enter Store Email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="mb-4">
+
+                                    <label className="form-label">
+                                        Store Address
+                                    </label>
+
+                                    <textarea
+                                        className="form-control"
+                                        rows="3"
+                                        placeholder="Enter Store Address"
+                                        name="address"
+                                        value={formData.address}
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <button
+                                    className="btn btn-success w-100"
+                                    onClick={handleSubmit}
+                                    disabled={loading}
+                                >
+                                    {
+                                        loading
+                                            ? "Creating..."
+                                            : "Create Store"
+                                    }
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </>
 
     );
+
 }
 
 export default CreateStore;

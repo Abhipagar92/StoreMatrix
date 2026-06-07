@@ -49,6 +49,59 @@ function CreateStoreOwner() {
 
             }
 
+            if (
+                formData.name.trim().length < 3
+            ) {
+
+                toast.error(
+                    "Name must be at least 3 characters"
+                );
+
+                return;
+
+            }
+
+            const emailRegex =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (
+                !emailRegex.test(
+                    formData.email
+                )
+            ) {
+
+                toast.error(
+                    "Please enter a valid email"
+                );
+
+                return;
+
+            }
+
+            if (
+                formData.password.length < 6
+            ) {
+
+                toast.error(
+                    "Password must be at least 6 characters"
+                );
+
+                return;
+
+            }
+
+            if (
+                formData.address.trim().length < 5
+            ) {
+
+                toast.error(
+                    "Address must be at least 5 characters"
+                );
+
+                return;
+
+            }
+
             setLoading(true);
 
             const result =

@@ -48,12 +48,11 @@ function ChangePassword() {
             }
 
             if (
-                formData.newPassword !==
-                formData.confirmPassword
+                formData.newPassword.length < 6
             ) {
 
                 toast.error(
-                    "New Password and Confirm Password do not match"
+                    "Password must be at least 6 characters"
                 );
 
                 return;
@@ -61,11 +60,25 @@ function ChangePassword() {
             }
 
             if (
-                formData.newPassword.length < 6
+                formData.oldPassword ===
+                formData.newPassword
             ) {
 
-                toast.warning(
-                    "Password must be at least 6 characters"
+                toast.error(
+                    "New password must be different from current password"
+                );
+
+                return;
+
+            }
+
+            if (
+                formData.newPassword !==
+                formData.confirmPassword
+            ) {
+
+                toast.error(
+                    "New Password and Confirm Password do not match"
                 );
 
                 return;
@@ -171,7 +184,7 @@ function ChangePassword() {
                                 <div className="mb-4">
 
                                     <label className="form-label">
-                                        Confirm Password
+                                        Confirm New Password
                                     </label>
 
                                     <input
