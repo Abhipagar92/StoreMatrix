@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { toast } from "react-toastify";
+
 import Header from "../../components/common/Header";
 import Loader from "../../components/common/Loader";
 
@@ -21,33 +23,32 @@ function StoreOwnerDashboard() {
 
     }, []);
 
-    const loadDashboard =
-        async () => {
+    const loadDashboard = async () => {
 
-            try {
+        try {
 
-                const result =
-                    await getDashboard();
+            const result =
+                await getDashboard();
 
-                setStore(
-                    result.data
-                );
+            setStore(
+                result.data
+            );
 
-            } catch (error) {
+        } catch (error) {
 
-                console.log(error);
+            console.log(error);
 
-                alert(
-                    "Failed to Load Dashboard"
-                );
+            toast.error(
+                "Failed to Load Dashboard"
+            );
 
-            } finally {
+        } finally {
 
-                setLoading(false);
+            setLoading(false);
 
-            }
+        }
 
-        };
+    };
 
     if (loading) {
 
@@ -181,6 +182,22 @@ function StoreOwnerDashboard() {
                                 </p>
                             )
                         }
+
+                        <p>
+                            <strong>
+                                Average Rating:
+                            </strong>
+                            {" "}
+                            ⭐ {store.averageRating}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Total Ratings:
+                            </strong>
+                            {" "}
+                            {store.totalRatings}
+                        </p>
 
                     </div>
 
