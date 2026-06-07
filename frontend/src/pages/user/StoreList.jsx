@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
+import { toast } from "react-toastify";
+
 import Header from "../../components/common/Header";
+import Loader from "../../components/common/Loader";
 import StoreCard from "../../components/store/StoreCard";
 
 import { getStores } from "../../services/store";
@@ -9,6 +12,9 @@ function StoreList() {
 
     const [stores, setStores] =
         useState([]);
+
+    const [loading, setLoading] =
+        useState(true);
 
     const [search, setSearch] =
         useState("");
@@ -34,9 +40,13 @@ function StoreList() {
 
             console.log(error);
 
-            alert(
+            toast.error(
                 "Failed to Load Stores"
             );
+
+        } finally {
+
+            setLoading(false);
 
         }
 
@@ -52,6 +62,19 @@ function StoreList() {
                     )
         );
 
+    if (loading) {
+
+        return (
+
+            <>
+                <Header />
+                <Loader />
+            </>
+
+        );
+
+    }
+
     return (
 
         <>
@@ -59,9 +82,13 @@ function StoreList() {
 
             <div className="container mt-5">
 
-                <h2 className="mb-4">
-                    Available Stores
-                </h2>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+
+                    <h2>
+                        Available Stores
+                    </h2>
+
+                </div>
 
                 <input
                     type="text"
@@ -76,7 +103,7 @@ function StoreList() {
                 />
 
                 {
-                    filteredStores.length === 0 && (
+                    filteredStores.length === 0 ? (
 
                         <div className="alert alert-warning">
 
@@ -84,35 +111,38 @@ function StoreList() {
 
                         </div>
 
+                    ) : (
+
+                        <div className="row">
+
+                            {
+                                filteredStores.map(
+                                    (store) => (
+
+                                        <div
+                                            className="col-md-4 mb-4"
+                                            key={
+                                                store.store_id
+                                            }
+                                        >
+
+                                            <StoreCard
+                                                store={store}
+                                            />
+
+                                        </div>
+
+                                    )
+                                )
+                            }
+
+                        </div>
+
                     )
                 }
 
-                <div className="row">
-
-                    {
-                        filteredStores.map(
-                            (store) => (
-
-                                <div
-                                    className="col-md-4 mb-4"
-                                    key={
-                                        store.store_id
-                                    }
-                                >
-
-                                    <StoreCard
-                                        store={store}
-                                    />
-
-                                </div>
-
-                            )
-                        )
-                    }
-
-                </div>
-
             </div>
+
         </>
 
     );
