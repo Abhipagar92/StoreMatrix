@@ -1,20 +1,24 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 import { registerUser } from "../../services/auth";
 
 function Register() {
 
     const navigate = useNavigate();
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] =
+        useState(false);
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-        address: ""
-    });
+    const [formData, setFormData] =
+        useState({
+            name: "",
+            email: "",
+            password: "",
+            address: ""
+        });
 
     const handleChange = (e) => {
 
@@ -30,13 +34,16 @@ function Register() {
         try {
 
             if (
-                !formData.name ||
-                !formData.email ||
-                !formData.password ||
-                !formData.address
+                !formData.name.trim() ||
+                !formData.email.trim() ||
+                !formData.password.trim() ||
+                !formData.address.trim()
             ) {
 
-                alert("Please fill all fields");
+                toast.warning(
+                    "Please fill all fields"
+                );
+
                 return;
 
             }
@@ -44,9 +51,13 @@ function Register() {
             setLoading(true);
 
             const result =
-                await registerUser(formData);
+                await registerUser(
+                    formData
+                );
 
-            alert(result.message);
+            toast.success(
+                result.message
+            );
 
             setFormData({
                 name: "",
@@ -55,11 +66,15 @@ function Register() {
                 address: ""
             });
 
-            navigate("/");
+            setTimeout(() => {
+
+                navigate("/");
+
+            }, 1500);
 
         } catch (error) {
 
-            alert(
+            toast.error(
                 error?.response?.data?.message ||
                 "Registration Failed"
             );
@@ -188,4 +203,3 @@ function Register() {
 }
 
 export default Register;
-
