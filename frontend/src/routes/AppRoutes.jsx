@@ -4,26 +4,15 @@ import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 
 import Users from "../pages/admin/Users";
-
-import AdminDashboard
-    from "../pages/admin/AdminDashboard";
-
-import StoreOwnerDashboard
-    from "../pages/owner/StoreOwnerDashboard";
-
-import StoreList
-    from "../pages/user/StoreList";
-
-import ProtectedRoute
-    from "../components/common/ProtectedRoute";
-
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import StoreOwnerDashboard from "../pages/owner/StoreOwnerDashboard";
+import StoreList from "../pages/user/StoreList";
+import ProtectedRoute from "../components/common/ProtectedRoute";
 import Stores from "../pages/admin/Stores";
-
 import CreateStoreOwner from "../pages/admin/CreateStoreOwner";
-
 import CreateStore from "../pages/admin/CreateStore";
-
 import StoreDetails from "../pages/user/StoreDetails";
+import Profile from "../pages/profile/Profile";
 
 function AppRoutes() {
 
@@ -133,6 +122,21 @@ function AppRoutes() {
                             allowedRoles={["NORMAL_USER"]}
                         >
                             <StoreDetails />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/profile"
+                    element={
+                        <ProtectedRoute
+                            allowedRoles={[
+                                "ADMIN",
+                                "NORMAL_USER",
+                                "STORE_OWNER"
+                            ]}
+                        >
+                            <Profile />
                         </ProtectedRoute>
                     }
                 />

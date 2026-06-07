@@ -1,6 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 
-import {  getUser,  clearStorage } from "../../utils/storage";
+import {
+    getUser,
+    clearStorage
+} from "../../utils/storage";
 
 function Header() {
 
@@ -22,14 +25,89 @@ function Header() {
 
             <div className="container">
 
-                <Link className="navbar-brand" to="/">
+                <Link
+                    className="navbar-brand"
+                    to="/"
+                >
                     StoreMatrix
                 </Link>
+
+                <div className="navbar-nav me-auto">
+
+                    {user?.role === "ADMIN" && (
+                        <>
+                            <Link
+                                className="nav-link"
+                                to="/admin/dashboard"
+                            >
+                                Dashboard
+                            </Link>
+
+                            <Link
+                                className="nav-link"
+                                to="/admin/users"
+                            >
+                                Users
+                            </Link>
+
+                            <Link
+                                className="nav-link"
+                                to="/admin/stores"
+                            >
+                                Stores
+                            </Link>
+
+                            <Link
+                                className="nav-link"
+                                to="/admin/store-owner"
+                            >
+                                Create Owner
+                            </Link>
+
+                            <Link
+                                className="nav-link"
+                                to="/admin/store"
+                            >
+                                Create Store
+                            </Link>
+                        </>
+                    )}
+
+                    {user?.role === "NORMAL_USER" && (
+                        <>
+                            <Link
+                                className="nav-link"
+                                to="/stores"
+                            >
+                                Stores
+                            </Link>
+                        </>
+                    )}
+
+                    {user?.role === "STORE_OWNER" && (
+                        <>
+                            <Link
+                                className="nav-link"
+                                to="/owner/dashboard"
+                            >
+                                Dashboard
+                            </Link>
+                        </>
+                    )}
+
+                    <Link
+                        className="nav-link"
+                        to="/profile"
+                    >
+                        Profile
+                    </Link>
+
+                </div>
 
                 <div className="d-flex align-items-center">
 
                     <span className="text-white me-3">
-                        {user?.name}
+                        Welcome, {user?.name}
                     </span>
 
                     <button
