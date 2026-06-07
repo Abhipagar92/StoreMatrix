@@ -17,6 +17,9 @@ function Users() {
     const [loading, setLoading] =
         useState(true);
 
+    const [search, setSearch] =
+        useState("");
+
     useEffect(() => {
 
         loadUsers();
@@ -36,6 +39,8 @@ function Users() {
 
         } catch (error) {
 
+            console.log(error);
+
             toast.error(
                 "Failed to Load Users"
             );
@@ -47,6 +52,29 @@ function Users() {
         }
 
     };
+
+    const filteredUsers =
+        users.filter(
+            (user) =>
+
+                user.name
+                    ?.toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    ) ||
+
+                user.email
+                    ?.toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    ) ||
+
+                user.role
+                    ?.toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    )
+        );
 
     if (loading) {
 
@@ -68,14 +96,46 @@ function Users() {
 
             <div className="container mt-5">
 
-                <h2 className="mb-4">
-                    Users Management
-                </h2>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+
+                    <h2>
+                        Users Management
+                    </h2>
+
+                    <span className="badge bg-primary fs-6">
+
+                        Total Users:
+                        {" "}
+                        {filteredUsers.length}
+
+                    </span>
+
+                </div>
+
+                <div className="card shadow mb-4">
+
+                    <div className="card-body">
+
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search by Name, Email or Role"
+                            value={search}
+                            onChange={(e) =>
+                                setSearch(
+                                    e.target.value
+                                )
+                            }
+                        />
+
+                    </div>
+
+                </div>
 
                 {
-                    users.length === 0 ? (
+                    filteredUsers.length === 0 ? (
 
-                        <div className="alert alert-info">
+                        <div className="alert alert-warning">
 
                             No Users Found
 
@@ -108,7 +168,7 @@ function Users() {
                                         <tbody>
 
                                             {
-                                                users.map(
+                                                filteredUsers.map(
                                                     (user) => (
 
                                                         <tr
@@ -137,7 +197,15 @@ function Users() {
 
                                                             <td>
 
-                                                                <span className="badge bg-primary">
+                                                                <span
+                                                                    className={
+                                                                        user.role === "ADMIN"
+                                                                            ? "badge bg-danger"
+                                                                            : user.role === "STORE_OWNER"
+                                                                                ? "badge bg-warning text-dark"
+                                                                                : "badge bg-primary"
+                                                                    }
+                                                                >
 
                                                                     {
                                                                         user.role
@@ -153,7 +221,7 @@ function Users() {
                                                                     className={
                                                                         user.status === "ACTIVE"
                                                                             ? "badge bg-success"
-                                                                            : "badge bg-danger"
+                                                                            : "badge bg-secondary"
                                                                     }
                                                                 >
 
@@ -189,6 +257,7 @@ function Users() {
         </>
 
     );
+
 }
 
 export default Users;

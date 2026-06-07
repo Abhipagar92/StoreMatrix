@@ -18,6 +18,9 @@ function Stores() {
     const [loading, setLoading] =
         useState(true);
 
+    const [search, setSearch] =
+        useState("");
+
     useEffect(() => {
 
         loadStores();
@@ -61,9 +64,7 @@ function Stores() {
             );
 
         if (!confirmDelete) {
-
             return;
-
         }
 
         try {
@@ -90,6 +91,29 @@ function Stores() {
 
     };
 
+    const filteredStores =
+        stores.filter(
+            (store) =>
+
+                store.name
+                    ?.toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    ) ||
+
+                store.email
+                    ?.toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    ) ||
+
+                store.address
+                    ?.toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    )
+        );
+
     if (loading) {
 
         return (
@@ -110,14 +134,46 @@ function Stores() {
 
             <div className="container mt-5">
 
-                <h2 className="mb-4">
-                    Stores Management
-                </h2>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+
+                    <h2>
+                        Stores Management
+                    </h2>
+
+                    <span className="badge bg-primary fs-6">
+
+                        Total Stores:
+                        {" "}
+                        {filteredStores.length}
+
+                    </span>
+
+                </div>
+
+                <div className="card shadow mb-4">
+
+                    <div className="card-body">
+
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search by Store Name, Email or Address"
+                            value={search}
+                            onChange={(e) =>
+                                setSearch(
+                                    e.target.value
+                                )
+                            }
+                        />
+
+                    </div>
+
+                </div>
 
                 {
-                    stores.length === 0 ? (
+                    filteredStores.length === 0 ? (
 
-                        <div className="alert alert-info">
+                        <div className="alert alert-warning">
 
                             No Stores Found
 
@@ -151,7 +207,7 @@ function Stores() {
                                         <tbody>
 
                                             {
-                                                stores.map(
+                                                filteredStores.map(
                                                     (store) => (
 
                                                         <tr
@@ -190,7 +246,7 @@ function Stores() {
                                                                     className={
                                                                         store.status === "ACTIVE"
                                                                             ? "badge bg-success"
-                                                                            : "badge bg-danger"
+                                                                            : "badge bg-secondary"
                                                                     }
                                                                 >
 
@@ -241,6 +297,7 @@ function Stores() {
         </>
 
     );
+
 }
 
 export default Stores;
