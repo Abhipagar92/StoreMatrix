@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-import { getDashboardSummary } from "../../services/admin";
+import { toast } from "react-toastify";
+
 import Header from "../../components/common/Header";
+import Loader from "../../components/common/Loader";
+
+import {
+    getDashboardSummary
+} from "../../services/admin";
 
 function AdminDashboard() {
 
@@ -12,40 +19,58 @@ function AdminDashboard() {
             totalRatings: 0
         });
 
+    const [loading, setLoading] =
+        useState(true);
+
     useEffect(() => {
 
         loadDashboard();
 
     }, []);
 
-    const loadDashboard =
-        async () => {
+    const loadDashboard = async () => {
 
-            try {
+        try {
 
-                const result =
-                    await getDashboardSummary();
+            const result =
+                await getDashboardSummary();
 
-                setSummary(
-                    result.data
-                );
+            setSummary(
+                result.data
+            );
 
-            } catch (error) {
+        } catch (error) {
 
-                console.log(error);
+            console.log(error);
 
-                alert(
-                    "Failed to Load Dashboard"
-                );
+            toast.error(
+                "Failed to Load Dashboard"
+            );
 
-            }
+        } finally {
 
-        };
+            setLoading(false);
+
+        }
+
+    };
+
+    if (loading) {
+
+        return (
+
+            <>
+                <Header />
+                <Loader />
+            </>
+
+        );
+
+    }
 
     return (
 
         <>
-
             <Header />
 
             <div className="container mt-4">
@@ -56,19 +81,19 @@ function AdminDashboard() {
 
                 <div className="row">
 
-                    <div className="col-md-4">
+                    <div className="col-md-4 mb-4">
 
-                        <div className="card text-center shadow">
+                        <div className="card bg-primary text-white shadow">
 
-                            <div className="card-body">
+                            <div className="card-body text-center">
 
                                 <h5>
-                                    Total Users
+                                    👥 Total Users
                                 </h5>
 
-                                <h2>
+                                <h1>
                                     {summary.totalUsers}
-                                </h2>
+                                </h1>
 
                             </div>
 
@@ -76,19 +101,19 @@ function AdminDashboard() {
 
                     </div>
 
-                    <div className="col-md-4">
+                    <div className="col-md-4 mb-4">
 
-                        <div className="card text-center shadow">
+                        <div className="card bg-success text-white shadow">
 
-                            <div className="card-body">
+                            <div className="card-body text-center">
 
                                 <h5>
-                                    Total Stores
+                                    🏪 Total Stores
                                 </h5>
 
-                                <h2>
+                                <h1>
                                     {summary.totalStores}
-                                </h2>
+                                </h1>
 
                             </div>
 
@@ -96,19 +121,79 @@ function AdminDashboard() {
 
                     </div>
 
-                    <div className="col-md-4">
+                    <div className="col-md-4 mb-4">
 
-                        <div className="card text-center shadow">
+                        <div className="card bg-warning text-dark shadow">
 
-                            <div className="card-body">
+                            <div className="card-body text-center">
 
                                 <h5>
-                                    Total Ratings
+                                    ⭐ Total Ratings
                                 </h5>
 
-                                <h2>
+                                <h1>
                                     {summary.totalRatings}
-                                </h2>
+                                </h1>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div className="card shadow">
+
+                    <div className="card-body">
+
+                        <h4 className="mb-4">
+                            Quick Actions
+                        </h4>
+
+                        <div className="row">
+
+                            <div className="col-md-3 mb-3">
+
+                                <Link
+                                    to="/admin/store-owner"
+                                    className="btn btn-primary w-100"
+                                >
+                                    Create Store Owner
+                                </Link>
+
+                            </div>
+
+                            <div className="col-md-3 mb-3">
+
+                                <Link
+                                    to="/admin/store"
+                                    className="btn btn-success w-100"
+                                >
+                                    Create Store
+                                </Link>
+
+                            </div>
+
+                            <div className="col-md-3 mb-3">
+
+                                <Link
+                                    to="/admin/users"
+                                    className="btn btn-dark w-100"
+                                >
+                                    View Users
+                                </Link>
+
+                            </div>
+
+                            <div className="col-md-3 mb-3">
+
+                                <Link
+                                    to="/admin/stores"
+                                    className="btn btn-warning w-100"
+                                >
+                                    View Stores
+                                </Link>
 
                             </div>
 
@@ -123,7 +208,6 @@ function AdminDashboard() {
         </>
 
     );
-
 
 }
 
