@@ -14,6 +14,7 @@ import CreateStore from "../pages/admin/CreateStore";
 import StoreDetails from "../pages/user/StoreDetails";
 import Profile from "../pages/profile/Profile";
 import ChangePassword from "../pages/profile/ChangePassword";
+import NotFound from "../pages/common/NotFound";
 
 function AppRoutes() {
 
@@ -159,7 +160,7 @@ function AppRoutes() {
 
                 <Route
                     path="*"
-                    element={<Login />}
+                    element={<NotFound />}
                 />
 
             </Routes>

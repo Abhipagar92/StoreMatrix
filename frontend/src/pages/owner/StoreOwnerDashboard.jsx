@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import Header from "../../components/common/Header";
+import Footer from "../../components/common/Footer";
 import Loader from "../../components/common/Loader";
 
 import {
@@ -11,7 +12,7 @@ import {
 
 function StoreOwnerDashboard() {
 
-    const [store, setStore] =
+    const [dashboard, setDashboard] =
         useState(null);
 
     const [loading, setLoading] =
@@ -30,7 +31,7 @@ function StoreOwnerDashboard() {
             const result =
                 await getDashboard();
 
-            setStore(
+            setDashboard(
                 result.data
             );
 
@@ -53,20 +54,20 @@ function StoreOwnerDashboard() {
     if (loading) {
 
         return (
-
             <>
                 <Header />
                 <Loader />
             </>
-
         );
 
     }
 
-    if (!store) {
+    if (
+        !dashboard ||
+        !dashboard.store
+    ) {
 
         return (
-
             <>
                 <Header />
 
@@ -80,11 +81,14 @@ function StoreOwnerDashboard() {
 
                 </div>
 
+                <Footer />
             </>
-
         );
 
     }
+
+    const store =
+        dashboard.store;
 
     return (
 
@@ -141,7 +145,7 @@ function StoreOwnerDashboard() {
 
                 </div>
 
-                <div className="card shadow">
+                <div className="card shadow mb-4">
 
                     <div className="card-body">
 
@@ -159,29 +163,21 @@ function StoreOwnerDashboard() {
                             {store.name}
                         </p>
 
-                        {
-                            store.email && (
-                                <p>
-                                    <strong>
-                                        Email:
-                                    </strong>
-                                    {" "}
-                                    {store.email}
-                                </p>
-                            )
-                        }
+                        <p>
+                            <strong>
+                                Email:
+                            </strong>
+                            {" "}
+                            {store.email}
+                        </p>
 
-                        {
-                            store.address && (
-                                <p>
-                                    <strong>
-                                        Address:
-                                    </strong>
-                                    {" "}
-                                    {store.address}
-                                </p>
-                            )
-                        }
+                        <p>
+                            <strong>
+                                Address:
+                            </strong>
+                            {" "}
+                            {store.address}
+                        </p>
 
                         <p>
                             <strong>
@@ -203,11 +199,99 @@ function StoreOwnerDashboard() {
 
                 </div>
 
+                <div className="card shadow">
+
+                    <div className="card-body">
+
+                        <h4 className="mb-3">
+                            Users Who Rated
+                        </h4>
+
+                        <table className="table table-bordered table-striped">
+
+                            <thead className="table-dark">
+
+                                <tr>
+
+                                    <th>
+                                        Name
+                                    </th>
+
+                                    <th>
+                                        Email
+                                    </th>
+
+                                    <th>
+                                        Rating
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {
+                                    dashboard.ratings &&
+                                    dashboard.ratings.length > 0 ? (
+
+                                        dashboard.ratings.map(
+                                            (
+                                                user,
+                                                index
+                                            ) => (
+
+                                                <tr key={index}>
+
+                                                    <td>
+                                                        {user.name}
+                                                    </td>
+
+                                                    <td>
+                                                        {user.email}
+                                                    </td>
+
+                                                    <td>
+                                                        ⭐ {user.rating}
+                                                    </td>
+
+                                                </tr>
+
+                                            )
+                                        )
+
+                                    ) : (
+
+                                        <tr>
+
+                                            <td
+                                                colSpan="3"
+                                                className="text-center"
+                                            >
+                                                No Ratings Yet
+                                            </td>
+
+                                        </tr>
+
+                                    )
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
             </div>
+
+            <Footer />
 
         </>
 
     );
+
 }
 
 export default StoreOwnerDashboard;

@@ -1,6 +1,10 @@
-const storeService = require("./store.service");
+const storeService =
+    require("./store.service");
 
-const getStores = async (req, res) => {
+const getStores = async (
+    req,
+    res
+) => {
 
     try {
 
@@ -18,19 +22,27 @@ const getStores = async (req, res) => {
 
         return res.status(500).json({
             success: false,
-            message: "Internal Server Error"
+            message:
+                "Internal Server Error"
         });
 
     }
+
 };
 
-const searchStores = async (req, res) => {
+const searchStores = async (
+    req,
+    res
+) => {
 
     try {
 
+        const keyword =
+            req.query.keyword || "";
+
         const stores =
             await storeService.searchStores(
-                req.query.keyword
+                keyword
             );
 
         return res.status(200).json({
@@ -44,13 +56,18 @@ const searchStores = async (req, res) => {
 
         return res.status(500).json({
             success: false,
-            message: "Internal Server Error"
+            message:
+                "Internal Server Error"
         });
 
     }
+
 };
 
-const getStoreDetails = async (req, res) => {
+const getStoreDetails = async (
+    req,
+    res
+) => {
 
     try {
 
@@ -60,10 +77,13 @@ const getStoreDetails = async (req, res) => {
             );
 
         if (!store) {
+
             return res.status(404).json({
                 success: false,
-                message: "Store Not Found"
+                message:
+                    "Store Not Found"
             });
+
         }
 
         return res.status(200).json({
@@ -77,16 +97,16 @@ const getStoreDetails = async (req, res) => {
 
         return res.status(500).json({
             success: false,
-            message: "Internal Server Error"
+            message:
+                "Internal Server Error"
         });
 
     }
+
 };
 
 module.exports = {
     getStores,
     searchStores,
     getStoreDetails
-    
-
 };

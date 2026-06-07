@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+
 import Header from "../../components/common/Header";
+import Footer from "../../components/common/Footer";
 import Loader from "../../components/common/Loader";
+
 import { getStoreDetails } from "../../services/store";
 import { submitRating } from "../../services/rating";
-import Footer from "../../components/common/Footer";
 
 function StoreDetails() {
 
@@ -32,6 +34,11 @@ function StoreDetails() {
 
             const result =
                 await getStoreDetails(id);
+
+            console.log(
+                "STORE DETAILS =>",
+                result.data
+            );
 
             setStore(
                 result.data
@@ -77,6 +84,8 @@ function StoreDetails() {
                 result.message
             );
 
+            setRating(0);
+
             loadStore();
 
         } catch (error) {
@@ -93,12 +102,10 @@ function StoreDetails() {
     if (loading) {
 
         return (
-
             <>
                 <Header />
                 <Loader />
             </>
-
         );
 
     }
@@ -106,7 +113,6 @@ function StoreDetails() {
     if (!store) {
 
         return (
-
             <>
                 <Header />
 
@@ -120,8 +126,8 @@ function StoreDetails() {
 
                 </div>
 
+                <Footer />
             </>
-
         );
 
     }
@@ -135,13 +141,13 @@ function StoreDetails() {
 
                 <div className="row justify-content-center">
 
-                    <div className="col-md-8">
+                    <div className="col-lg-8">
 
-                        <div className="card shadow">
+                        <div className="card shadow border-0">
 
                             <div className="card-body p-4">
 
-                                <h2 className="mb-3">
+                                <h2 className="mb-2">
                                     {store.name}
                                 </h2>
 
@@ -153,11 +159,11 @@ function StoreDetails() {
 
                                 <div className="row mb-4">
 
-                                    <div className="col-md-6">
+                                    <div className="col-md-6 mb-3">
 
-                                        <div className="card text-center border-0 bg-light">
+                                        <div className="card bg-light border-0">
 
-                                            <div className="card-body">
+                                            <div className="card-body text-center">
 
                                                 <h5>
                                                     Average Rating
@@ -175,11 +181,11 @@ function StoreDetails() {
 
                                     </div>
 
-                                    <div className="col-md-6">
+                                    <div className="col-md-6 mb-3">
 
-                                        <div className="card text-center border-0 bg-light">
+                                        <div className="card bg-light border-0">
 
-                                            <div className="card-body">
+                                            <div className="card-body text-center">
 
                                                 <h5>
                                                     Total Ratings
@@ -205,7 +211,11 @@ function StoreDetails() {
                                     Rate This Store
                                 </h4>
 
-                                <div className="mb-4">
+                                <p className="text-muted">
+                                    Help other users by rating this store.
+                                </p>
+
+                                <div className="mb-3">
 
                                     {
                                         [1, 2, 3, 4, 5].map(
@@ -236,6 +246,22 @@ function StoreDetails() {
 
                                 </div>
 
+                                {
+                                    rating > 0 && (
+
+                                        <p className="fw-bold">
+
+                                            Selected Rating:
+                                            {" "}
+                                            {rating}
+                                            {" "}
+                                            Star(s)
+
+                                        </p>
+
+                                    )
+                                }
+
                                 <button
                                     className="btn btn-primary"
                                     onClick={handleRating}
@@ -252,12 +278,13 @@ function StoreDetails() {
                 </div>
 
             </div>
-          
-          <Footer />
+
+            <Footer />
 
         </>
 
     );
+
 }
 
 export default StoreDetails;
