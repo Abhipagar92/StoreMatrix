@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
 
-import { getUsers }
-from "../../services/admin";
+import { toast } from "react-toastify";
+
+import Header from "../../components/common/Header";
+import Loader from "../../components/common/Loader";
+
+import {
+    getUsers
+} from "../../services/admin";
 
 function Users() {
 
     const [users, setUsers] =
         useState([]);
+
+    const [loading, setLoading] =
+        useState(true);
 
     useEffect(() => {
 
@@ -14,105 +23,171 @@ function Users() {
 
     }, []);
 
-    const loadUsers =
-        async () => {
+    const loadUsers = async () => {
 
-            try {
+        try {
 
-                const result =
-                    await getUsers();
+            const result =
+                await getUsers();
 
-                setUsers(
-                    result.data
-                );
+            setUsers(
+                result.data
+            );
 
-            } catch (error) {
+        } catch (error) {
 
-                alert(
-                    "Failed to Load Users"
-                );
+            toast.error(
+                "Failed to Load Users"
+            );
 
-            }
+        } finally {
 
-        };
+            setLoading(false);
+
+        }
+
+    };
+
+    if (loading) {
+
+        return (
+
+            <>
+                <Header />
+                <Loader />
+            </>
+
+        );
+
+    }
 
     return (
 
-        <div className="container mt-5">
+        <>
+            <Header />
 
-            <h2 className="mb-4">
-                Users Management
-            </h2>
+            <div className="container mt-5">
 
-            <table
-                className="table table-bordered"
-            >
+                <h2 className="mb-4">
+                    Users Management
+                </h2>
 
-                <thead>
+                {
+                    users.length === 0 ? (
 
-                    <tr>
+                        <div className="alert alert-info">
 
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Status</th>
+                            No Users Found
 
-                    </tr>
+                        </div>
 
-                </thead>
+                    ) : (
 
-                <tbody>
+                        <div className="card shadow">
 
-                    {
-                        users.map(
-                            (user) => (
-                                <tr
-                                    key={
-                                        user.user_id
-                                    }
-                                >
+                            <div className="card-body">
 
-                                    <td>
-                                        {
-                                            user.user_id
-                                        }
-                                    </td>
+                                <div className="table-responsive">
 
-                                    <td>
-                                        {
-                                            user.name
-                                        }
-                                    </td>
+                                    <table className="table table-hover table-bordered align-middle">
 
-                                    <td>
-                                        {
-                                            user.email
-                                        }
-                                    </td>
+                                        <thead className="table-dark">
 
-                                    <td>
-                                        {
-                                            user.role
-                                        }
-                                    </td>
+                                            <tr>
 
-                                    <td>
-                                        {
-                                            user.status
-                                        }
-                                    </td>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
 
-                                </tr>
-                            )
-                        )
-                    }
+                                            </tr>
 
-                </tbody>
+                                        </thead>
 
-            </table>
+                                        <tbody>
 
-        </div>
+                                            {
+                                                users.map(
+                                                    (user) => (
+
+                                                        <tr
+                                                            key={
+                                                                user.user_id
+                                                            }
+                                                        >
+
+                                                            <td>
+                                                                {
+                                                                    user.user_id
+                                                                }
+                                                            </td>
+
+                                                            <td>
+                                                                {
+                                                                    user.name
+                                                                }
+                                                            </td>
+
+                                                            <td>
+                                                                {
+                                                                    user.email
+                                                                }
+                                                            </td>
+
+                                                            <td>
+
+                                                                <span className="badge bg-primary">
+
+                                                                    {
+                                                                        user.role
+                                                                    }
+
+                                                                </span>
+
+                                                            </td>
+
+                                                            <td>
+
+                                                                <span
+                                                                    className={
+                                                                        user.status === "ACTIVE"
+                                                                            ? "badge bg-success"
+                                                                            : "badge bg-danger"
+                                                                    }
+                                                                >
+
+                                                                    {
+                                                                        user.status
+                                                                    }
+
+                                                                </span>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    )
+                                                )
+                                            }
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    )
+                }
+
+            </div>
+
+        </>
+
     );
 }
 
