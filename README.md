@@ -142,9 +142,9 @@ https://vercel.com
 ---
 
 # Author
-Abhishek Nandkumar Pagar
-BE Computer Engineering (2025)
-CDAC Feb 2026
+Abhishek Nandkumar Pagar |
+BE Computer Engineering (2025) |
+CDAC Feb 2026  |
 Full Stack Developer
 
 ---
