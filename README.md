@@ -10,6 +10,16 @@ The application follows a Role-Based Access Control (RBAC) architecture with thr
 * Store Owner
 * Normal User
 
+  use the examples for login:
+  
+  Store owner:
+      email : rahul@gmail.com
+      passwrod: Rahul@123
+
+  User :
+      email : abhishek@gmail.com
+      passwrod: abhi@123  
+
 The project is fully responsive and deployed using modern cloud platforms.
 
 ---
