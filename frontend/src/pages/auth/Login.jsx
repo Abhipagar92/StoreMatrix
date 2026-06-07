@@ -1,57 +1,77 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser} from "../../services/auth";
-import {saveToken,saveUser} from "../../utils/storage";
-import {AuthContext } from "../../context/AuthContext";
+
+import { toast } from "react-toastify";
+
+import { loginUser } from "../../services/auth";
+
+import {
+    saveToken,
+    saveUser
+} from "../../utils/storage";
+
+import {
+    AuthContext
+} from "../../context/AuthContext";
 
 function Login() {
 
-    const navigate =  useNavigate();
-    const { setUser } =  useContext(AuthContext);
-    const [loading, setLoading] =  useState(false);
-    const [email, setEmail] =  useState("");
-    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-    const handleLogin =
-        async () => {
+    const { setUser } =
+        useContext(AuthContext);
 
-            try {
+    const [loading, setLoading] =
+        useState(false);
 
-                if (
-                    !email ||
-                    !password
-                ) {
+    const [email, setEmail] =
+        useState("");
 
-                    alert(
-                        "Please fill all fields"
-                    );
+    const [password, setPassword] =
+        useState("");
 
-                    return;
-                }
+    const handleLogin = async () => {
 
-                setLoading(true);
+        try {
 
-                const result =
-                    await loginUser(
-                        email,
-                        password
-                    );
+            if (
+                !email.trim() ||
+                !password.trim()
+            ) {
 
-                saveToken(
-                    result.token
+                toast.warning(
+                    "Please fill all fields"
                 );
 
-                saveUser(
-                    result.user
+                return;
+
+            }
+
+            setLoading(true);
+
+            const result =
+                await loginUser(
+                    email,
+                    password
                 );
 
-                setUser(
-                    result.user
-                );
+            saveToken(
+                result.token
+            );
 
-                alert(
-                    result.message
-                );
+            saveUser(
+                result.user
+            );
+
+            setUser(
+                result.user
+            );
+
+            toast.success(
+                result.message
+            );
+
+            setTimeout(() => {
 
                 if (
                     result.user.role ===
@@ -81,20 +101,22 @@ function Login() {
 
                 }
 
-            } catch (error) {
+            }, 1000);
 
-                alert(
-                    error?.response?.data?.message ||
-                    "Login Failed"
-                );
+        } catch (error) {
 
-            } finally {
+            toast.error(
+                error?.response?.data?.message ||
+                "Login Failed"
+            );
 
-                setLoading(false);
+        } finally {
 
-            }
+            setLoading(false);
 
-        };
+        }
+
+    };
 
     return (
 
@@ -112,13 +134,14 @@ function Login() {
 
                         <div className="mb-3">
 
-                            <label>
+                            <label className="form-label">
                                 Email
                             </label>
 
                             <input
                                 type="email"
                                 className="form-control"
+                                placeholder="Enter Email"
                                 value={email}
                                 onChange={(e) =>
                                     setEmail(
@@ -131,13 +154,14 @@ function Login() {
 
                         <div className="mb-3">
 
-                            <label>
+                            <label className="form-label">
                                 Password
                             </label>
 
                             <input
                                 type="password"
                                 className="form-control"
+                                placeholder="Enter Password"
                                 value={password}
                                 onChange={(e) =>
                                     setPassword(
@@ -160,13 +184,11 @@ function Login() {
                             }
                         </button>
 
-                        <p className="text-center mt-3">
+                        <p className="text-center mt-3 mb-0">
 
                             Don't have an account?{" "}
 
-                            <Link
-                                to="/register"
-                            >
+                            <Link to="/register">
                                 Register
                             </Link>
 
