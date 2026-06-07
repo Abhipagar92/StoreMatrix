@@ -141,6 +141,11 @@ function AppRoutes() {
                     }
                 />
 
+                <Route
+                    path="*"
+                    element={<Login />}
+                />
+
             </Routes>
 
         </BrowserRouter>

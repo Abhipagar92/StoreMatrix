@@ -1,7 +1,7 @@
 import Header from "../../components/common/Header";
 
 import { getUser }
-from "../../utils/storage";
+    from "../../utils/storage";
 
 function Profile() {
 
@@ -14,35 +14,70 @@ function Profile() {
 
             <div className="container mt-5">
 
-                <div className="card shadow p-4">
+                <div className="row justify-content-center">
 
-                    <h2>
-                        My Profile
-                    </h2>
+                    <div className="col-md-6">
 
-                    <hr />
+                        <div className="card shadow">
 
-                    <p>
-                        <strong>Name:</strong>
-                        {" "}
-                        {user?.name}
-                    </p>
+                            <div className="card-body">
 
-                    <p>
-                        <strong>Email:</strong>
-                        {" "}
-                        {user?.email}
-                    </p>
+                                <h2 className="text-center mb-4">
+                                    My Profile
+                                </h2>
 
-                    <p>
-                        <strong>Role:</strong>
-                        {" "}
-                        {user?.role}
-                    </p>
+                                <hr />
+
+                                <div className="mb-3">
+
+                                    <strong>Name:</strong>
+
+                                    <p className="mb-0">
+                                        {user?.name}
+                                    </p>
+
+                                </div>
+
+                                <div className="mb-3">
+
+                                    <strong>Email:</strong>
+
+                                    <p className="mb-0">
+                                        {user?.email}
+                                    </p>
+
+                                </div>
+
+                                <div className="mb-3">
+
+                                    <strong>Role:</strong>
+
+                                    <p className="mb-0">
+                                        {user?.role}
+                                    </p>
+
+                                </div>
+
+                                <div className="mb-3">
+
+                                    <strong>Address:</strong>
+
+                                    <p className="mb-0">
+                                        {user?.address || "N/A"}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </div>
+
         </>
 
     );
