@@ -11,14 +11,16 @@ The application follows a Role-Based Access Control (RBAC) architecture with thr
 * Normal User
 
   use the examples for login:
-  admin :
+  
+ - admin :
     email: admin@gmail.com
     password: admin123
-  Store owner:
+  
+ - Store owner:
       email : rahul@gmail.com
       passwrod: Rahul@123
 
-  User :
+ - User :
       email : abhishek@gmail.com
       passwrod: abhi@123  
 
