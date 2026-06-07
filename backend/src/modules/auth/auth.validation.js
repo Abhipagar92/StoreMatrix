@@ -4,7 +4,7 @@ const registerValidation = [
     body("name")
         .notEmpty()
         .withMessage("Name is required")
-        .isLength({ min: 3, max: 60 })
+        .isLength({ min: 20, max: 60 })
         .withMessage("Name must be between 20 and 60 characters"),
 
     body("email")

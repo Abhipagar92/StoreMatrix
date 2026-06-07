@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 
-import Header from "../../components/common/Header";
+import Layout from "../../components/common/Layout";
 import Loader from "../../components/common/Loader";
 
 import {
@@ -118,10 +118,11 @@ function Stores() {
 
         return (
 
-            <>
-                <Header />
+            <Layout>
+
                 <Loader />
-            </>
+
+            </Layout>
 
         );
 
@@ -129,10 +130,9 @@ function Stores() {
 
     return (
 
-        <>
-            <Header />
+        <Layout>
 
-            <div className="container mt-5">
+            <div className="container">
 
                 <div className="d-flex justify-content-between align-items-center mb-4">
 
@@ -196,6 +196,8 @@ function Stores() {
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
+                                                <th>Address</th>
+                                                <th>Rating</th>
                                                 <th>Owner</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -236,6 +238,26 @@ function Stores() {
 
                                                             <td>
                                                                 {
+                                                                    store.address
+                                                                }
+                                                            </td>
+
+                                                            <td>
+
+                                                                <span className="badge bg-warning text-dark">
+
+                                                                    ⭐ {
+                                                                        store.averageRating ||
+                                                                        store.average_rating ||
+                                                                        0
+                                                                    }
+
+                                                                </span>
+
+                                                            </td>
+
+                                                            <td>
+                                                                {
                                                                     store.owner_name
                                                                 }
                                                             </td>
@@ -246,7 +268,7 @@ function Stores() {
                                                                     className={
                                                                         store.status === "ACTIVE"
                                                                             ? "badge bg-success"
-                                                                            : "badge bg-secondary"
+                                                                            : "badge bg-danger"
                                                                     }
                                                                 >
 
@@ -294,7 +316,7 @@ function Stores() {
 
             </div>
 
-        </>
+        </Layout>
 
     );
 

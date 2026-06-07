@@ -48,7 +48,7 @@ router.get(
 );
 
 
-router.patch(
+router.put(
     "/change-password",
     authenticate,
     changePassword

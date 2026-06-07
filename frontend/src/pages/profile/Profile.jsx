@@ -1,7 +1,5 @@
-import Header from "../../components/common/Header";
-
-import {getUser } from "../../utils/storage";
-import Footer from "../../components/common/Footer";
+import { getUser } from "../../utils/storage";
+import Layout from "../../components/common/Layout";
 
 function Profile() {
 
@@ -11,8 +9,7 @@ function Profile() {
 
         return (
 
-            <>
-                <Header />
+            <Layout>
 
                 <div className="container mt-5">
 
@@ -24,7 +21,7 @@ function Profile() {
 
                 </div>
 
-            </>
+            </Layout>
 
         );
 
@@ -32,10 +29,9 @@ function Profile() {
 
     return (
 
-        <>
-            <Header />
+        <Layout>
 
-            <div className="container mt-5">
+            <div className="container">
 
                 <div className="row justify-content-center">
 
@@ -77,18 +73,11 @@ function Profile() {
                                             <div className="card-body">
 
                                                 <h6 className="text-muted">
-
                                                     <i className="bi bi-person-fill me-2"></i>
-
                                                     Full Name
-
                                                 </h6>
 
-                                                <h5>
-
-                                                    {user.name}
-
-                                                </h5>
+                                                <h5>{user.name}</h5>
 
                                             </div>
 
@@ -103,18 +92,11 @@ function Profile() {
                                             <div className="card-body">
 
                                                 <h6 className="text-muted">
-
                                                     <i className="bi bi-envelope-fill me-2"></i>
-
                                                     Email Address
-
                                                 </h6>
 
-                                                <h5>
-
-                                                    {user.email}
-
-                                                </h5>
+                                                <h5>{user.email}</h5>
 
                                             </div>
 
@@ -133,18 +115,11 @@ function Profile() {
                                             <div className="card-body">
 
                                                 <h6 className="text-muted">
-
                                                     <i className="bi bi-shield-fill-check me-2"></i>
-
                                                     User Role
-
                                                 </h6>
 
-                                                <h5>
-
-                                                    {user.role}
-
-                                                </h5>
+                                                <h5>{user.role}</h5>
 
                                             </div>
 
@@ -159,17 +134,12 @@ function Profile() {
                                             <div className="card-body">
 
                                                 <h6 className="text-muted">
-
                                                     <i className="bi bi-person-badge-fill me-2"></i>
-
                                                     Account Status
-
                                                 </h6>
 
                                                 <h5 className="text-success">
-
                                                     Active
-
                                                 </h5>
 
                                             </div>
@@ -200,8 +170,7 @@ function Profile() {
 
             </div>
 
-        <Footer />  
-        </>
+        </Layout>
 
     );
 

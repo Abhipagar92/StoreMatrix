@@ -23,7 +23,7 @@ function Header() {
 
     return (
 
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 
             <div className="container">
 

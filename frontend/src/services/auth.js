@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "./config";
+import { getToken } from "../utils/storage";
 
 export const loginUser = async (email, password) => {
 

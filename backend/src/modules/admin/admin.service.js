@@ -1,7 +1,6 @@
 const db = require("../../config/db");
 const bcrypt = require("bcrypt");
 
-
 const getDashboardSummary = async () => {
 
     const [[users]] = await db.execute(
@@ -16,15 +15,12 @@ const getDashboardSummary = async () => {
         "SELECT COUNT(*) AS totalRatings FROM ratings"
     );
 
-
     return {
         totalUsers: users.totalUsers,
         totalStores: stores.totalStores,
         totalRatings: ratings.totalRatings
     };
 };
-
-
 
 const getAllUsers = async () => {
 
@@ -46,8 +42,6 @@ const getAllUsers = async () => {
     return users;
 };
 
-
-//
 const getAllStores = async () => {
 
     const [stores] = await db.execute(
@@ -58,19 +52,39 @@ const getAllStores = async () => {
             s.email,
             s.address,
             s.status,
-            u.name AS owner_name
+
+            u.name AS owner_name,
+
+            IFNULL(
+                ROUND(
+                    AVG(r.rating),
+                    1
+                ),
+                0
+            ) AS averageRating
+
         FROM stores s
+
         JOIN users u
             ON s.owner_id = u.user_id
+
+        LEFT JOIN ratings r
+            ON s.store_id = r.store_id
+
+        GROUP BY
+            s.store_id,
+            s.name,
+            s.email,
+            s.address,
+            s.status,
+            u.name
+
         ORDER BY s.store_id DESC
         `
     );
 
     return stores;
 };
-
-
-
 
 const createStoreOwner = async (data) => {
 
@@ -108,7 +122,6 @@ const createStoreOwner = async (data) => {
     return result;
 };
 
-
 const createStore = async (data) => {
 
     const {
@@ -140,7 +153,6 @@ const createStore = async (data) => {
     return result;
 };
 
-
 const deleteStore = async (storeId) => {
 
     const [result] = await db.execute(
@@ -153,7 +165,6 @@ const deleteStore = async (storeId) => {
 
     return result;
 };
-
 
 const deleteUser = async (userId) => {
 
@@ -168,16 +179,12 @@ const deleteUser = async (userId) => {
     return result;
 };
 
-// console.log("SERVICE EXPORT TEST");
-
-module.exports = { 
-    getDashboardSummary, 
-    getAllUsers, 
-    getAllStores, 
-    createStoreOwner, 
+module.exports = {
+    getDashboardSummary,
+    getAllUsers,
+    getAllStores,
+    createStoreOwner,
     createStore,
     deleteStore,
     deleteUser
- };
-
-// console.log(module.exports);
+};

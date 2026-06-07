@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
-import Header from "../../components/common/Header";
+import Layout from "../../components/common/Layout";
 import Loader from "../../components/common/Loader";
-import Footer from "../../components/common/Footer";
 
 import {
     getDashboardSummary
@@ -59,20 +58,22 @@ function AdminDashboard() {
     if (loading) {
 
         return (
-            <>
-                <Header />
+
+            <Layout>
+
                 <Loader />
-            </>
+
+            </Layout>
+
         );
 
     }
 
     return (
 
-        <>
-            <Header />
+        <Layout>
 
-            <div className="container mt-4">
+            <div className="container">
 
                 <div className="mb-4">
 
@@ -233,9 +234,7 @@ function AdminDashboard() {
 
             </div>
 
-         <Footer />    
-
-        </>
+        </Layout>
 
     );
 

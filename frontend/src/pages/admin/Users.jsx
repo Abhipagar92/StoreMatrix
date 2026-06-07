@@ -69,6 +69,12 @@ function Users() {
                         search.toLowerCase()
                     ) ||
 
+                user.address
+                    ?.toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    ) ||
+
                 user.role
                     ?.toLowerCase()
                     .includes(
@@ -119,7 +125,7 @@ function Users() {
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="Search by Name, Email or Role"
+                            placeholder="Search by Name, Email, Address or Role"
                             value={search}
                             onChange={(e) =>
                                 setSearch(
@@ -158,6 +164,7 @@ function Users() {
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
+                                                <th>Address</th>
                                                 <th>Role</th>
                                                 <th>Status</th>
 
@@ -192,6 +199,12 @@ function Users() {
                                                             <td>
                                                                 {
                                                                     user.email
+                                                                }
+                                                            </td>
+
+                                                            <td>
+                                                                {
+                                                                    user.address
                                                                 }
                                                             </td>
 
