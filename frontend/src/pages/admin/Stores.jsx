@@ -1,54 +1,87 @@
 import { useEffect, useState } from "react";
 
-import { getStores, deleteStore } from "../../services/admin";
+import { toast } from "react-toastify";
+
+import Header from "../../components/common/Header";
+import Loader from "../../components/common/Loader";
+
+import {
+    getStores,
+    deleteStore
+} from "../../services/admin";
 
 function Stores() {
 
-    const [stores, setStores] = useState([]);
+    const [stores, setStores] =
+        useState([]);
+
+    const [loading, setLoading] =
+        useState(true);
 
     useEffect(() => {
+
         loadStores();
+
     }, []);
 
     const loadStores = async () => {
 
         try {
 
-            const result = await getStores();
+            const result =
+                await getStores();
 
-            setStores(result.data);
+            setStores(
+                result.data
+            );
 
         } catch (error) {
 
             console.log(error);
 
-            alert("Failed to Load Stores");
+            toast.error(
+                "Failed to Load Stores"
+            );
+
+        } finally {
+
+            setLoading(false);
 
         }
 
     };
 
-    const handleDelete = async (storeId) => {
+    const handleDelete = async (
+        storeId
+    ) => {
 
-        const confirmDelete = window.confirm(
-            "Are you sure you want to delete this store?"
-        );
+        const confirmDelete =
+            window.confirm(
+                "Are you sure you want to delete this store?"
+            );
 
         if (!confirmDelete) {
+
             return;
+
         }
 
         try {
 
-            const result = await deleteStore(storeId);
+            const result =
+                await deleteStore(
+                    storeId
+                );
 
-            alert(result.message);
+            toast.success(
+                result.message
+            );
 
             loadStores();
 
         } catch (error) {
 
-            alert(
+            toast.error(
                 error?.response?.data?.message ||
                 "Delete Failed"
             );
@@ -57,93 +90,157 @@ function Stores() {
 
     };
 
+    if (loading) {
+
+        return (
+
+            <>
+                <Header />
+                <Loader />
+            </>
+
+        );
+
+    }
+
     return (
 
-        <div className="container mt-5">
+        <>
+            <Header />
 
-            <h2 className="mb-4">
-                Stores Management
-            </h2>
+            <div className="container mt-5">
 
-            <table className="table table-bordered table-striped">
+                <h2 className="mb-4">
+                    Stores Management
+                </h2>
 
-                <thead className="table-dark">
+                {
+                    stores.length === 0 ? (
 
-                    <tr>
+                        <div className="alert alert-info">
 
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Owner</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                            No Stores Found
 
-                    </tr>
+                        </div>
 
-                </thead>
+                    ) : (
 
-                <tbody>
+                        <div className="card shadow">
 
-                    {
-                        stores.length > 0 ? (
+                            <div className="card-body">
 
-                            stores.map((store) => (
+                                <div className="table-responsive">
 
-                                <tr key={store.store_id}>
+                                    <table className="table table-hover table-bordered align-middle">
 
-                                    <td>{store.store_id}</td>
+                                        <thead className="table-dark">
 
-                                    <td>{store.name}</td>
+                                            <tr>
 
-                                    <td>{store.email}</td>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Owner</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
 
-                                    <td>{store.owner_name}</td>
+                                            </tr>
 
-                                    <td>{store.status}</td>
+                                        </thead>
 
-                                    <td>
+                                        <tbody>
 
-                                        <button
-                                            className="btn btn-danger btn-sm"
-                                            onClick={() =>
-                                                handleDelete(
-                                                    store.store_id
+                                            {
+                                                stores.map(
+                                                    (store) => (
+
+                                                        <tr
+                                                            key={
+                                                                store.store_id
+                                                            }
+                                                        >
+
+                                                            <td>
+                                                                {
+                                                                    store.store_id
+                                                                }
+                                                            </td>
+
+                                                            <td>
+                                                                {
+                                                                    store.name
+                                                                }
+                                                            </td>
+
+                                                            <td>
+                                                                {
+                                                                    store.email
+                                                                }
+                                                            </td>
+
+                                                            <td>
+                                                                {
+                                                                    store.owner_name
+                                                                }
+                                                            </td>
+
+                                                            <td>
+
+                                                                <span
+                                                                    className={
+                                                                        store.status === "ACTIVE"
+                                                                            ? "badge bg-success"
+                                                                            : "badge bg-danger"
+                                                                    }
+                                                                >
+
+                                                                    {
+                                                                        store.status
+                                                                    }
+
+                                                                </span>
+
+                                                            </td>
+
+                                                            <td>
+
+                                                                <button
+                                                                    className="btn btn-danger btn-sm"
+                                                                    onClick={() =>
+                                                                        handleDelete(
+                                                                            store.store_id
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Delete
+                                                                </button>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    )
                                                 )
                                             }
-                                        >
-                                            Delete
-                                        </button>
 
-                                    </td>
+                                        </tbody>
 
-                                </tr>
+                                    </table>
 
-                            ))
+                                </div>
 
-                        ) : (
+                            </div>
 
-                            <tr>
+                        </div>
 
-                                <td
-                                    colSpan="6"
-                                    className="text-center"
-                                >
-                                    No Stores Found
-                                </td>
+                    )
+                }
 
-                            </tr>
+            </div>
 
-                        )
-                    }
-
-                </tbody>
-
-            </table>
-
-        </div>
+        </>
 
     );
 }
 
 export default Stores;
-
