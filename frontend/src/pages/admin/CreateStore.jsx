@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 
-import Header from "../../components/common/Header";
+import Layout from "../../components/common/Layout";
 
 import {
     getUsers,
@@ -167,31 +167,38 @@ function CreateStore() {
 
     return (
 
-        <>
-            <Header />
+        <Layout>
 
-            <div className="container mt-5">
+            <div className="container-fluid">
 
                 <div className="row justify-content-center">
 
-                    <div className="col-md-7">
+                    <div className="col-lg-8">
 
-                        <div className="card shadow">
+                        <div className="card shadow border-0">
 
                             <div className="card-body p-4">
 
-                                <h2 className="text-center mb-4">
-                                    Create Store
-                                </h2>
+                                <div className="mb-4 text-center">
+
+                                    <h2 className="fw-bold">
+                                        Create Store
+                                    </h2>
+
+                                    <p className="text-muted mb-0">
+                                        Add a new store and assign it to a Store Owner
+                                    </p>
+
+                                </div>
 
                                 <div className="mb-3">
 
-                                    <label className="form-label">
+                                    <label className="form-label fw-semibold">
                                         Store Owner
                                     </label>
 
                                     <select
-                                        className="form-control"
+                                        className="form-select"
                                         name="ownerId"
                                         value={formData.ownerId}
                                         onChange={handleChange}
@@ -226,7 +233,7 @@ function CreateStore() {
 
                                 <div className="mb-3">
 
-                                    <label className="form-label">
+                                    <label className="form-label fw-semibold">
                                         Store Name
                                     </label>
 
@@ -243,7 +250,7 @@ function CreateStore() {
 
                                 <div className="mb-3">
 
-                                    <label className="form-label">
+                                    <label className="form-label fw-semibold">
                                         Store Email
                                     </label>
 
@@ -260,13 +267,13 @@ function CreateStore() {
 
                                 <div className="mb-4">
 
-                                    <label className="form-label">
+                                    <label className="form-label fw-semibold">
                                         Store Address
                                     </label>
 
                                     <textarea
                                         className="form-control"
-                                        rows="3"
+                                        rows="4"
                                         placeholder="Enter Store Address"
                                         name="address"
                                         value={formData.address}
@@ -297,7 +304,7 @@ function CreateStore() {
 
             </div>
 
-        </>
+        </Layout>
 
     );
 

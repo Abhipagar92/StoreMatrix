@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 
-import Header from "../../components/common/Header";
+import Layout from "../../components/common/Layout";
 import Loader from "../../components/common/Loader";
 import StoreCard from "../../components/store/StoreCard";
-import { getStores } from "../../services/store";
-import Footer from "../../components/common/Footer";
+
+import {
+    getStores
+} from "../../services/store";
 
 function StoreList() {
 
@@ -55,8 +57,15 @@ function StoreList() {
     const filteredStores =
         stores.filter(
             (store) =>
+
                 store.name
-                    .toLowerCase()
+                    ?.toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    ) ||
+
+                store.address
+                    ?.toLowerCase()
                     .includes(
                         search.toLowerCase()
                     )
@@ -66,10 +75,11 @@ function StoreList() {
 
         return (
 
-            <>
-                <Header />
+            <Layout>
+
                 <Loader />
-            </>
+
+            </Layout>
 
         );
 
@@ -77,30 +87,53 @@ function StoreList() {
 
     return (
 
-        <>
-            <Header />
+        <Layout>
 
-            <div className="container mt-5">
+            <div className="container-fluid">
 
                 <div className="d-flex justify-content-between align-items-center mb-4">
 
-                    <h2>
-                        Available Stores
-                    </h2>
+                    <div>
+
+                        <h2 className="fw-bold mb-1">
+                            Available Stores
+                        </h2>
+
+                        <p className="text-muted mb-0">
+                            Browse and rate stores
+                        </p>
+
+                    </div>
+
+                    <span className="badge bg-primary fs-6">
+
+                        Total Stores:
+                        {" "}
+                        {filteredStores.length}
+
+                    </span>
 
                 </div>
 
-                <input
-                    type="text"
-                    className="form-control mb-4"
-                    placeholder="Search Stores..."
-                    value={search}
-                    onChange={(e) =>
-                        setSearch(
-                            e.target.value
-                        )
-                    }
-                />
+                <div className="card shadow border-0 mb-4">
+
+                    <div className="card-body">
+
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search by Store Name or Address..."
+                            value={search}
+                            onChange={(e) =>
+                                setSearch(
+                                    e.target.value
+                                )
+                            }
+                        />
+
+                    </div>
+
+                </div>
 
                 {
                     filteredStores.length === 0 ? (
@@ -120,7 +153,7 @@ function StoreList() {
                                     (store) => (
 
                                         <div
-                                            className="col-md-4 mb-4"
+                                            className="col-xl-4 col-lg-6 col-md-6 mb-4"
                                             key={
                                                 store.store_id
                                             }
@@ -142,12 +175,11 @@ function StoreList() {
                 }
 
             </div>
-          
-         <Footer />
 
-        </>
+        </Layout>
 
     );
+
 }
 
 export default StoreList;

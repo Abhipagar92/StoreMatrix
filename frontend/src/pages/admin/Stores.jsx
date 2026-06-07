@@ -111,6 +111,12 @@ function Stores() {
                     ?.toLowerCase()
                     .includes(
                         search.toLowerCase()
+                    ) ||
+
+                store.owner_name
+                    ?.toLowerCase()
+                    .includes(
+                        search.toLowerCase()
                     )
         );
 
@@ -132,13 +138,21 @@ function Stores() {
 
         <Layout>
 
-            <div className="container">
+            <div className="container-fluid">
 
                 <div className="d-flex justify-content-between align-items-center mb-4">
 
-                    <h2>
-                        Stores Management
-                    </h2>
+                    <div>
+
+                        <h2 className="fw-bold mb-1">
+                            Stores Management
+                        </h2>
+
+                        <p className="text-muted mb-0">
+                            Manage all registered stores
+                        </p>
+
+                    </div>
 
                     <span className="badge bg-primary fs-6">
 
@@ -150,14 +164,14 @@ function Stores() {
 
                 </div>
 
-                <div className="card shadow mb-4">
+                <div className="card shadow border-0 mb-4">
 
                     <div className="card-body">
 
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="Search by Store Name, Email or Address"
+                            placeholder="Search by Store Name, Email, Address or Owner"
                             value={search}
                             onChange={(e) =>
                                 setSearch(
@@ -181,7 +195,7 @@ function Stores() {
 
                     ) : (
 
-                        <div className="card shadow">
+                        <div className="card shadow border-0">
 
                             <div className="card-body">
 
@@ -194,7 +208,7 @@ function Stores() {
                                             <tr>
 
                                                 <th>ID</th>
-                                                <th>Name</th>
+                                                <th>Store Name</th>
                                                 <th>Email</th>
                                                 <th>Address</th>
                                                 <th>Rating</th>
@@ -247,9 +261,11 @@ function Stores() {
                                                                 <span className="badge bg-warning text-dark">
 
                                                                     ⭐ {
-                                                                        store.averageRating ||
-                                                                        store.average_rating ||
-                                                                        0
+                                                                        Number(
+                                                                            store.averageRating ||
+                                                                            store.average_rating ||
+                                                                            0
+                                                                        ).toFixed(1)
                                                                     }
 
                                                                 </span>

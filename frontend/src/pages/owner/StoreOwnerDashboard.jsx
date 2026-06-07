@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 
-import Header from "../../components/common/Header";
-import Footer from "../../components/common/Footer";
+import Layout from "../../components/common/Layout";
 import Loader from "../../components/common/Loader";
 
 import {
@@ -54,10 +53,13 @@ function StoreOwnerDashboard() {
     if (loading) {
 
         return (
-            <>
-                <Header />
+
+            <Layout>
+
                 <Loader />
-            </>
+
+            </Layout>
+
         );
 
     }
@@ -68,21 +70,17 @@ function StoreOwnerDashboard() {
     ) {
 
         return (
-            <>
-                <Header />
 
-                <div className="container mt-5">
+            <Layout>
 
-                    <div className="alert alert-info">
+                <div className="alert alert-info">
 
-                        No Store Assigned Yet
-
-                    </div>
+                    No Store Assigned Yet
 
                 </div>
 
-                <Footer />
-            </>
+            </Layout>
+
         );
 
     }
@@ -92,30 +90,43 @@ function StoreOwnerDashboard() {
 
     return (
 
-        <>
-            <Header />
+        <Layout>
 
-            <div className="container mt-5">
+            <div className="container-fluid">
 
-                <h2 className="mb-4">
-                    Store Owner Dashboard
-                </h2>
+                <div className="mb-4">
+
+                    <h2 className="fw-bold">
+                        Store Owner Dashboard
+                    </h2>
+
+                    <p className="text-muted">
+                        Monitor your store performance and ratings
+                    </p>
+
+                </div>
 
                 <div className="row mb-4">
 
-                    <div className="col-md-6">
+                    <div className="col-md-6 mb-3">
 
-                        <div className="card shadow text-center">
+                        <div className="card bg-warning text-dark shadow border-0">
 
-                            <div className="card-body">
+                            <div className="card-body text-center">
 
                                 <h5>
                                     Average Rating
                                 </h5>
 
-                                <h2 className="text-warning">
-                                    ⭐ {store.averageRating}
-                                </h2>
+                                <h1 className="fw-bold">
+
+                                    ⭐ {
+                                        Number(
+                                            store.averageRating || 0
+                                        ).toFixed(1)
+                                    }
+
+                                </h1>
 
                             </div>
 
@@ -123,19 +134,23 @@ function StoreOwnerDashboard() {
 
                     </div>
 
-                    <div className="col-md-6">
+                    <div className="col-md-6 mb-3">
 
-                        <div className="card shadow text-center">
+                        <div className="card bg-primary text-white shadow border-0">
 
-                            <div className="card-body">
+                            <div className="card-body text-center">
 
                                 <h5>
                                     Total Ratings
                                 </h5>
 
-                                <h2 className="text-primary">
-                                    {store.totalRatings}
-                                </h2>
+                                <h1 className="fw-bold">
+
+                                    {
+                                        store.totalRatings || 0
+                                    }
+
+                                </h1>
 
                             </div>
 
@@ -145,7 +160,7 @@ function StoreOwnerDashboard() {
 
                 </div>
 
-                <div className="card shadow mb-4">
+                <div className="card shadow border-0 mb-4">
 
                     <div className="card-body">
 
@@ -155,130 +170,164 @@ function StoreOwnerDashboard() {
 
                         <hr />
 
-                        <p>
-                            <strong>
-                                Store Name:
-                            </strong>
-                            {" "}
-                            {store.name}
-                        </p>
+                        <div className="row">
 
-                        <p>
-                            <strong>
-                                Email:
-                            </strong>
-                            {" "}
-                            {store.email}
-                        </p>
+                            <div className="col-md-6">
 
-                        <p>
-                            <strong>
-                                Address:
-                            </strong>
-                            {" "}
-                            {store.address}
-                        </p>
+                                <p>
+                                    <strong>
+                                        Store Name:
+                                    </strong>
+                                    {" "}
+                                    {store.name}
+                                </p>
 
-                        <p>
-                            <strong>
-                                Average Rating:
-                            </strong>
-                            {" "}
-                            ⭐ {store.averageRating}
-                        </p>
+                                <p>
+                                    <strong>
+                                        Email:
+                                    </strong>
+                                    {" "}
+                                    {store.email}
+                                </p>
 
-                        <p>
-                            <strong>
-                                Total Ratings:
-                            </strong>
-                            {" "}
-                            {store.totalRatings}
-                        </p>
+                            </div>
+
+                            <div className="col-md-6">
+
+                                <p>
+                                    <strong>
+                                        Address:
+                                    </strong>
+                                    {" "}
+                                    {store.address}
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Rating:
+                                    </strong>
+                                    {" "}
+                                    ⭐ {
+                                        Number(
+                                            store.averageRating || 0
+                                        ).toFixed(1)
+                                    }
+                                </p>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-                <div className="card shadow">
+                <div className="card shadow border-0">
 
                     <div className="card-body">
 
-                        <h4 className="mb-3">
-                            Users Who Rated
-                        </h4>
+                        <div className="d-flex justify-content-between align-items-center mb-3">
 
-                        <table className="table table-bordered table-striped">
+                            <h4>
+                                Users Who Rated
+                            </h4>
 
-                            <thead className="table-dark">
-
-                                <tr>
-
-                                    <th>
-                                        Name
-                                    </th>
-
-                                    <th>
-                                        Email
-                                    </th>
-
-                                    <th>
-                                        Rating
-                                    </th>
-
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
+                            <span className="badge bg-success">
 
                                 {
-                                    dashboard.ratings &&
-                                    dashboard.ratings.length > 0 ? (
-
-                                        dashboard.ratings.map(
-                                            (
-                                                user,
-                                                index
-                                            ) => (
-
-                                                <tr key={index}>
-
-                                                    <td>
-                                                        {user.name}
-                                                    </td>
-
-                                                    <td>
-                                                        {user.email}
-                                                    </td>
-
-                                                    <td>
-                                                        ⭐ {user.rating}
-                                                    </td>
-
-                                                </tr>
-
-                                            )
-                                        )
-
-                                    ) : (
-
-                                        <tr>
-
-                                            <td
-                                                colSpan="3"
-                                                className="text-center"
-                                            >
-                                                No Ratings Yet
-                                            </td>
-
-                                        </tr>
-
-                                    )
+                                    dashboard.ratings?.length || 0
                                 }
+                                {" "}
+                                Ratings
 
-                            </tbody>
+                            </span>
 
-                        </table>
+                        </div>
+
+                        <div className="table-responsive">
+
+                            <table className="table table-hover table-bordered align-middle">
+
+                                <thead className="table-dark">
+
+                                    <tr>
+
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Rating</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    {
+                                        dashboard.ratings &&
+                                        dashboard.ratings.length > 0 ? (
+
+                                            dashboard.ratings.map(
+                                                (
+                                                    user,
+                                                    index
+                                                ) => (
+
+                                                    <tr
+                                                        key={index}
+                                                    >
+
+                                                        <td>
+                                                            {
+                                                                user.name
+                                                            }
+                                                        </td>
+
+                                                        <td>
+                                                            {
+                                                                user.email
+                                                            }
+                                                        </td>
+
+                                                        <td>
+
+                                                            <span className="badge bg-warning text-dark">
+
+                                                                ⭐ {
+                                                                    user.rating
+                                                                }
+
+                                                            </span>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                )
+                                            )
+
+                                        ) : (
+
+                                            <tr>
+
+                                                <td
+                                                    colSpan="3"
+                                                    className="text-center text-muted"
+                                                >
+
+                                                    No Ratings Yet
+
+                                                </td>
+
+                                            </tr>
+
+                                        )
+                                    }
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
 
                     </div>
 
@@ -286,9 +335,7 @@ function StoreOwnerDashboard() {
 
             </div>
 
-            <Footer />
-
-        </>
+        </Layout>
 
     );
 

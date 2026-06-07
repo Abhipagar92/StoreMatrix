@@ -16,7 +16,8 @@ import {
 
 function Login() {
 
-    const navigate = useNavigate();
+    const navigate =
+        useNavigate();
 
     const { setUser } =
         useContext(AuthContext);
@@ -29,6 +30,16 @@ function Login() {
 
     const [password, setPassword] =
         useState("");
+
+    const handleKeyPress = (e) => {
+
+        if (e.key === "Enter") {
+
+            handleLogin();
+
+        }
+
+    };
 
     const handleLogin = async () => {
 
@@ -73,33 +84,9 @@ function Login() {
 
             setTimeout(() => {
 
-                if (
-                    result.user.role ===
-                    "ADMIN"
-                ) {
-
-                    navigate(
-                        "/admin/dashboard"
-                    );
-
-                }
-                else if (
-                    result.user.role ===
-                    "STORE_OWNER"
-                ) {
-
-                    navigate(
-                        "/owner/dashboard"
-                    );
-
-                }
-                else {
-
-                    navigate(
-                        "/stores"
-                    );
-
-                }
+                navigate(
+                    "/dashboard"
+                );
 
             }, 1000);
 
@@ -124,75 +111,105 @@ function Login() {
 
             <div className="row justify-content-center">
 
-                <div className="col-md-4">
+                <div className="col-lg-4 col-md-6">
 
-                    <div className="card shadow p-4">
+                    <div className="card shadow border-0">
 
-                        <h2 className="text-center mb-4">
-                            StoreMatrix Login
-                        </h2>
+                        <div className="card-body p-4">
 
-                        <div className="mb-3">
+                            <div className="text-center mb-4">
 
-                            <label className="form-label">
-                                Email
-                            </label>
+                                <h2 className="fw-bold text-primary">
 
-                            <input
-                                type="email"
-                                className="form-control"
-                                placeholder="Enter Email"
-                                value={email}
-                                onChange={(e) =>
-                                    setEmail(
-                                        e.target.value
-                                    )
+                                    StoreMatrix
+
+                                </h2>
+
+                                <p className="text-muted">
+
+                                    Sign in to continue
+
+                                </p>
+
+                            </div>
+
+                            <div className="mb-3">
+
+                                <label className="form-label">
+
+                                    Email
+
+                                </label>
+
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    placeholder="Enter Email"
+                                    value={email}
+                                    onChange={(e) =>
+                                        setEmail(
+                                            e.target.value
+                                        )
+                                    }
+                                    onKeyDown={
+                                        handleKeyPress
+                                    }
+                                />
+
+                            </div>
+
+                            <div className="mb-3">
+
+                                <label className="form-label">
+
+                                    Password
+
+                                </label>
+
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    placeholder="Enter Password"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(
+                                            e.target.value
+                                        )
+                                    }
+                                    onKeyDown={
+                                        handleKeyPress
+                                    }
+                                />
+
+                            </div>
+
+                            <button
+                                className="btn btn-primary w-100"
+                                onClick={handleLogin}
+                                disabled={loading}
+                            >
+
+                                {
+                                    loading
+                                        ? "Logging in..."
+                                        : "Login"
                                 }
-                            />
+
+                            </button>
+
+                            <p className="text-center mt-3 mb-0">
+
+                                Don't have an account?{" "}
+
+                                <Link to="/register">
+
+                                    Register
+
+                                </Link>
+
+                            </p>
 
                         </div>
-
-                        <div className="mb-3">
-
-                            <label className="form-label">
-                                Password
-                            </label>
-
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Enter Password"
-                                value={password}
-                                onChange={(e) =>
-                                    setPassword(
-                                        e.target.value
-                                    )
-                                }
-                            />
-
-                        </div>
-
-                        <button
-                            className="btn btn-primary w-100"
-                            onClick={handleLogin}
-                            disabled={loading}
-                        >
-                            {
-                                loading
-                                    ? "Logging in..."
-                                    : "Login"
-                            }
-                        </button>
-
-                        <p className="text-center mt-3 mb-0">
-
-                            Don't have an account?{" "}
-
-                            <Link to="/register">
-                                Register
-                            </Link>
-
-                        </p>
 
                     </div>
 
@@ -201,7 +218,9 @@ function Login() {
             </div>
 
         </div>
+
     );
+
 }
 
 export default Login;

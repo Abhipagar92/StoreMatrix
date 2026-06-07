@@ -1,3 +1,4 @@
+import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -5,22 +6,30 @@ function Layout({ children }) {
 
     return (
 
-        <>
-            <Header />
+        <div>
 
-            <div
-                style={{
-                    marginTop: "80px",
-                    marginBottom: "70px",
-                    minHeight: "calc(100vh - 150px)"
-                }}
-            >
-                {children}
+            <Sidebar />
+
+            <div className="main-content">
+
+                <Header />
+
+                <main
+                    style={{
+                        flex: 1,
+                        padding: "90px 20px 80px"
+                    }}
+                >
+
+                    {children}
+
+                </main>
+
+                <Footer />
+
             </div>
 
-            <Footer />
-
-        </>
+        </div>
 
     );
 

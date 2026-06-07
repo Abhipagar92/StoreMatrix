@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 
-import Header from "../../components/common/Header";
+import Layout from "../../components/common/Layout";
 import Loader from "../../components/common/Loader";
 
 import {
@@ -86,10 +86,11 @@ function Users() {
 
         return (
 
-            <>
-                <Header />
+            <Layout>
+
                 <Loader />
-            </>
+
+            </Layout>
 
         );
 
@@ -97,16 +98,23 @@ function Users() {
 
     return (
 
-        <>
-            <Header />
+        <Layout>
 
-            <div className="container mt-5">
+            <div className="container-fluid">
 
                 <div className="d-flex justify-content-between align-items-center mb-4">
 
-                    <h2>
-                        Users Management
-                    </h2>
+                    <div>
+
+                        <h2 className="fw-bold mb-1">
+                            Users Management
+                        </h2>
+
+                        <p className="text-muted mb-0">
+                            Manage all registered users
+                        </p>
+
+                    </div>
 
                     <span className="badge bg-primary fs-6">
 
@@ -118,7 +126,7 @@ function Users() {
 
                 </div>
 
-                <div className="card shadow mb-4">
+                <div className="card shadow border-0 mb-4">
 
                     <div className="card-body">
 
@@ -149,7 +157,7 @@ function Users() {
 
                     ) : (
 
-                        <div className="card shadow">
+                        <div className="card shadow border-0">
 
                             <div className="card-body">
 
@@ -267,7 +275,7 @@ function Users() {
 
             </div>
 
-        </>
+        </Layout>
 
     );
 

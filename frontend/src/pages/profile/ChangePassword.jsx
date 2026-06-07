@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { toast } from "react-toastify";
 
-import Header from "../../components/common/Header";
+import Layout from "../../components/common/Layout";
 
 import {
     changePassword
@@ -48,11 +48,11 @@ function ChangePassword() {
             }
 
             if (
-                formData.newPassword.length < 6
+                formData.newPassword.length < 8
             ) {
 
                 toast.error(
-                    "Password must be at least 6 characters"
+                    "Password must be at least 8 characters"
                 );
 
                 return;
@@ -122,26 +122,48 @@ function ChangePassword() {
 
     return (
 
-        <>
-            <Header />
+        <Layout>
 
-            <div className="container mt-5">
+            <div className="container-fluid">
+
+                <div className="mb-4">
+
+                    <h2 className="fw-bold">
+                        Change Password
+                    </h2>
+
+                    <p className="text-muted">
+                        Update your account password securely
+                    </p>
+
+                </div>
 
                 <div className="row justify-content-center">
 
-                    <div className="col-md-6">
+                    <div className="col-lg-6">
 
-                        <div className="card shadow">
+                        <div className="card shadow border-0">
 
                             <div className="card-body p-4">
 
-                                <h2 className="text-center mb-4">
-                                    Change Password
-                                </h2>
+                                <div className="text-center mb-4">
+
+                                    <i
+                                        className="bi bi-key-fill text-primary"
+                                        style={{
+                                            fontSize: "60px"
+                                        }}
+                                    ></i>
+
+                                    <h3 className="mt-3">
+                                        Update Password
+                                    </h3>
+
+                                </div>
 
                                 <div className="mb-3">
 
-                                    <label className="form-label">
+                                    <label className="form-label fw-semibold">
                                         Current Password
                                     </label>
 
@@ -162,7 +184,7 @@ function ChangePassword() {
 
                                 <div className="mb-3">
 
-                                    <label className="form-label">
+                                    <label className="form-label fw-semibold">
                                         New Password
                                     </label>
 
@@ -183,7 +205,7 @@ function ChangePassword() {
 
                                 <div className="mb-4">
 
-                                    <label className="form-label">
+                                    <label className="form-label fw-semibold">
                                         Confirm New Password
                                     </label>
 
@@ -199,6 +221,17 @@ function ChangePassword() {
                                             handleChange
                                         }
                                     />
+
+                                </div>
+
+                                <div className="alert alert-info">
+
+                                    Password must:
+                                    <ul className="mb-0 mt-2">
+                                        <li>Be at least 8 characters long</li>
+                                        <li>Be different from current password</li>
+                                        <li>Match the confirmation password</li>
+                                    </ul>
 
                                 </div>
 
@@ -224,9 +257,10 @@ function ChangePassword() {
 
             </div>
 
-        </>
+        </Layout>
 
     );
+
 }
 
 export default ChangePassword;

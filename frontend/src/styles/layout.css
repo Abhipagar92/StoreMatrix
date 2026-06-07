@@ -1,0 +1,280 @@
+/*
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    z-index: 1100;
+    transition: all 0.3s ease;
+}
+
+.main-content {
+    margin-left: 250px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-navbar {
+    position: fixed;
+    top: 0;
+    left: 250px;
+    right: 0;
+    height: 70px;
+    z-index: 1000;
+}
+
+.footer-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+    right: 0;
+    height: 50px;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-toggle {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1200;
+}
+
+*/
+
+/* Mobile */
+/*
+@media (max-width: 768px) {
+
+    .sidebar {
+
+        left: -250px; 
+    }
+
+    .sidebar.show-sidebar {
+
+        left: 0; 
+    }
+
+    .main-content {
+
+        margin-left: 0;
+    }
+
+    .top-navbar {
+
+        left: 0;
+    }
+
+    .footer-fixed {
+
+        left: 0;
+    }
+
+}
+    */
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    overflow-y: auto;
+
+    z-index: 1100;
+
+    transition: left 0.3s ease;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+    margin-left: 250px;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: #f8f9fa;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.top-navbar {
+    position: fixed;
+
+    top: 0;
+    left: 250px;
+    right: 0;
+
+    height: 70px;
+
+    z-index: 1000;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer-fixed {
+    position: fixed;
+
+    bottom: 0;
+    left: 250px;
+    right: 0;
+
+    height: 50px;
+
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================
+   HAMBURGER BUTTON
+========================= */
+
+.sidebar-toggle {
+    position: fixed;
+
+    top: 15px;
+    left: 15px;
+
+    z-index: 1200;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #6c757d;
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    z-index: 1099;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    /* Sidebar Hidden Initially */
+
+    .sidebar {
+
+        left: -250px;
+    }
+
+     .sidebar-overlay {
+        display: none;
+    }
+
+    /* Open Sidebar */
+
+    .sidebar.show-sidebar {
+
+        left: 0;
+    }
+
+    /* Main Content Full Width */
+
+    .main-content {
+
+        margin-left: 0;
+    }
+
+    /* Header */
+
+    .top-navbar {
+
+        left: 0;
+        width: 100%;
+
+        padding-left: 60px !important;
+        padding-right: 15px !important;
+    }
+
+    .top-navbar h4 {
+
+        font-size: 18px !important;
+    }
+
+    /* Footer */
+
+    .footer-fixed {
+
+        left: 0;
+        width: 100%;
+
+        font-size: 12px;
+
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    /* Hamburger Button */
+
+    .sidebar-toggle {
+
+        display: block;
+    }
+
+}
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media (min-width: 769px) {
+
+    .sidebar-toggle {
+
+        display: none;
+    }
+
+}    
