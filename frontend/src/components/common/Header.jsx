@@ -95,12 +95,9 @@ function Header() {
                         </>
                     )}
 
-                    <Link
-                        className="nav-link"
-                        to="/profile"
-                    >
-                        Profile
-                    </Link>
+                    <Link className="nav-link" to="/profile" > Profile</Link>
+
+                    <Link className="nav-link" to="/change-password" >Change Password</Link>
 
                 </div>
 

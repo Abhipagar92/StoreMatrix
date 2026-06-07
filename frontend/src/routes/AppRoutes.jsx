@@ -13,6 +13,7 @@ import CreateStoreOwner from "../pages/admin/CreateStoreOwner";
 import CreateStore from "../pages/admin/CreateStore";
 import StoreDetails from "../pages/user/StoreDetails";
 import Profile from "../pages/profile/Profile";
+import ChangePassword from "../pages/profile/ChangePassword";
 
 function AppRoutes() {
 
@@ -137,6 +138,21 @@ function AppRoutes() {
                             ]}
                         >
                             <Profile />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/change-password"
+                    element={
+                        <ProtectedRoute
+                            allowedRoles={[
+                                "ADMIN",
+                                "NORMAL_USER",
+                                "STORE_OWNER"
+                            ]}
+                        >
+                            <ChangePassword />
                         </ProtectedRoute>
                     }
                 />

@@ -23,3 +23,22 @@ export const registerUser = async (user) => {
 
     return response.data;
 };
+
+
+export const changePassword = async (
+    data
+) => {
+
+    const response = await axios.put(
+        `${config.BASE_URL}/auth/change-password`,
+        data,
+        {
+            headers: {
+                Authorization:
+                    `Bearer ${getToken()}`
+            }
+        }
+    );
+
+    return response.data;
+};
