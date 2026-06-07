@@ -58,12 +58,10 @@ function AdminDashboard() {
     if (loading) {
 
         return (
-
             <>
                 <Header />
                 <Loader />
             </>
-
         );
 
     }
@@ -75,23 +73,38 @@ function AdminDashboard() {
 
             <div className="container mt-4">
 
-                <h2 className="mb-4">
-                    Admin Dashboard
-                </h2>
+                <div className="mb-4">
+
+                    <h2 className="fw-bold">
+                        Admin Dashboard
+                    </h2>
+
+                    <p className="text-muted">
+                        Welcome to StoreMatrix Administration Panel
+                    </p>
+
+                </div>
 
                 <div className="row">
 
                     <div className="col-md-4 mb-4">
 
-                        <div className="card bg-primary text-white shadow">
+                        <div className="card bg-primary text-white shadow border-0">
 
                             <div className="card-body text-center">
 
-                                <h5>
-                                    👥 Total Users
+                                <i
+                                    className="bi bi-people-fill"
+                                    style={{
+                                        fontSize: "40px"
+                                    }}
+                                ></i>
+
+                                <h5 className="mt-3">
+                                    Total Users
                                 </h5>
 
-                                <h1>
+                                <h1 className="fw-bold">
                                     {summary.totalUsers}
                                 </h1>
 
@@ -103,15 +116,22 @@ function AdminDashboard() {
 
                     <div className="col-md-4 mb-4">
 
-                        <div className="card bg-success text-white shadow">
+                        <div className="card bg-success text-white shadow border-0">
 
                             <div className="card-body text-center">
 
-                                <h5>
-                                    🏪 Total Stores
+                                <i
+                                    className="bi bi-shop"
+                                    style={{
+                                        fontSize: "40px"
+                                    }}
+                                ></i>
+
+                                <h5 className="mt-3">
+                                    Total Stores
                                 </h5>
 
-                                <h1>
+                                <h1 className="fw-bold">
                                     {summary.totalStores}
                                 </h1>
 
@@ -123,15 +143,22 @@ function AdminDashboard() {
 
                     <div className="col-md-4 mb-4">
 
-                        <div className="card bg-warning text-dark shadow">
+                        <div className="card bg-warning text-dark shadow border-0">
 
                             <div className="card-body text-center">
 
-                                <h5>
-                                    ⭐ Total Ratings
+                                <i
+                                    className="bi bi-star-fill"
+                                    style={{
+                                        fontSize: "40px"
+                                    }}
+                                ></i>
+
+                                <h5 className="mt-3">
+                                    Total Ratings
                                 </h5>
 
-                                <h1>
+                                <h1 className="fw-bold">
                                     {summary.totalRatings}
                                 </h1>
 
@@ -143,7 +170,7 @@ function AdminDashboard() {
 
                 </div>
 
-                <div className="card shadow">
+                <div className="card shadow border-0">
 
                     <div className="card-body">
 

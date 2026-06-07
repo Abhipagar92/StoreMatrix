@@ -20,5 +20,6 @@ If you are developing a production application, we recommend using TypeScript wi
 
 - npm install axios react-router-dom bootstrap react-icons
 - npm install react-toastify
+- npm install bootstrap-icons
 
 
