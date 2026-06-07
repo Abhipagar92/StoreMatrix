@@ -1,11 +1,35 @@
 import Header from "../../components/common/Header";
 
-import { getUser }
-    from "../../utils/storage";
+import {
+    getUser
+} from "../../utils/storage";
 
 function Profile() {
 
     const user = getUser();
+
+    if (!user) {
+
+        return (
+
+            <>
+                <Header />
+
+                <div className="container mt-5">
+
+                    <div className="alert alert-warning">
+
+                        User information not found
+
+                    </div>
+
+                </div>
+
+            </>
+
+        );
+
+    }
 
     return (
 
@@ -16,55 +40,83 @@ function Profile() {
 
                 <div className="row justify-content-center">
 
-                    <div className="col-md-6">
+                    <div className="col-md-8">
 
                         <div className="card shadow">
 
-                            <div className="card-body">
+                            <div className="card-body p-5">
 
-                                <h2 className="text-center mb-4">
-                                    My Profile
-                                </h2>
+                                <div className="text-center mb-4">
+
+                                    <div
+                                        className="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center"
+                                        style={{
+                                            width: "90px",
+                                            height: "90px",
+                                            fontSize: "36px",
+                                            fontWeight: "bold"
+                                        }}
+                                    >
+                                        {
+                                            user.name
+                                                ?.charAt(0)
+                                                .toUpperCase()
+                                        }
+                                    </div>
+
+                                    <h2 className="mt-3">
+                                        {user.name}
+                                    </h2>
+
+                                    <p className="text-muted">
+                                        {user.role}
+                                    </p>
+
+                                </div>
 
                                 <hr />
 
-                                <div className="mb-3">
+                                <div className="row">
 
-                                    <strong>Name:</strong>
+                                    <div className="col-md-6 mb-3">
 
-                                    <p className="mb-0">
-                                        {user?.name}
-                                    </p>
+                                        <label className="form-label fw-bold">
+                                            Full Name
+                                        </label>
 
-                                </div>
+                                        <div className="form-control bg-light">
+                                            {user.name}
+                                        </div>
 
-                                <div className="mb-3">
+                                    </div>
 
-                                    <strong>Email:</strong>
+                                    <div className="col-md-6 mb-3">
 
-                                    <p className="mb-0">
-                                        {user?.email}
-                                    </p>
+                                        <label className="form-label fw-bold">
+                                            Email Address
+                                        </label>
 
-                                </div>
+                                        <div className="form-control bg-light">
+                                            {user.email}
+                                        </div>
 
-                                <div className="mb-3">
-
-                                    <strong>Role:</strong>
-
-                                    <p className="mb-0">
-                                        {user?.role}
-                                    </p>
+                                    </div>
 
                                 </div>
 
-                                <div className="mb-3">
+                                <div className="row">
 
-                                    <strong>Address:</strong>
+                                    <div className="col-md-6 mb-3">
 
-                                    <p className="mb-0">
-                                        {user?.address || "N/A"}
-                                    </p>
+                                        <label className="form-label fw-bold">
+                                            Role
+                                        </label>
+
+                                        <div className="form-control bg-light">
+                                            {user.role}
+                                        </div>
+
+                                    </div>
 
                                 </div>
 
