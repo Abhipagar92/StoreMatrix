@@ -1,8 +1,7 @@
 import Header from "../../components/common/Header";
 
-import {
-    getUser
-} from "../../utils/storage";
+import {getUser } from "../../utils/storage";
+import Footer from "../../components/common/Footer";
 
 function Profile() {
 
@@ -201,6 +200,7 @@ function Profile() {
 
             </div>
 
+        <Footer />  
         </>
 
     );

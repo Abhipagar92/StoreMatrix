@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import Header from "../../components/common/Header";
 import Loader from "../../components/common/Loader";
 import StoreCard from "../../components/store/StoreCard";
-
 import { getStores } from "../../services/store";
+import Footer from "../../components/common/Footer";
 
 function StoreList() {
 
@@ -142,6 +142,8 @@ function StoreList() {
                 }
 
             </div>
+          
+         <Footer />
 
         </>
 

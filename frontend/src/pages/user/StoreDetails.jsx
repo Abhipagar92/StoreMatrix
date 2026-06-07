@@ -1,18 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
 import { toast } from "react-toastify";
-
 import Header from "../../components/common/Header";
 import Loader from "../../components/common/Loader";
-
-import {
-    getStoreDetails
-} from "../../services/store";
-
-import {
-    submitRating
-} from "../../services/rating";
+import { getStoreDetails } from "../../services/store";
+import { submitRating } from "../../services/rating";
+import Footer from "../../components/common/Footer";
 
 function StoreDetails() {
 
@@ -259,6 +252,8 @@ function StoreDetails() {
                 </div>
 
             </div>
+          
+          <Footer />
 
         </>
 

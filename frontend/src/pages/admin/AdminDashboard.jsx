@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 import Header from "../../components/common/Header";
 import Loader from "../../components/common/Loader";
+import Footer from "../../components/common/Footer";
 
 import {
     getDashboardSummary
@@ -231,6 +232,8 @@ function AdminDashboard() {
                 </div>
 
             </div>
+
+         <Footer />    
 
         </>
 
