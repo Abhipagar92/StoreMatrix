@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import Header from "../../components/common/Header";
 import { getStoreDetails } from "../../services/store";
-
-import { submitRating, updateRating } from "../../services/rating";
+import { submitRating } from "../../services/rating";
+import Loader from "../../components/common/Loader";
 
 function StoreDetails() {
 
@@ -13,7 +14,7 @@ function StoreDetails() {
         useState(null);
 
     const [rating, setRating] =
-        useState("");
+        useState(0);
 
     useEffect(() => {
 
@@ -28,20 +29,16 @@ function StoreDetails() {
             const result =
                 await getStoreDetails(id);
 
-            console.log(
-                "STORE DETAILS =>",
-                result
-            );
-
             setStore(
                 result.data
             );
 
         } catch (error) {
 
-            console.log(
-                "STORE ERROR =>",
-                error
+            console.log(error);
+
+            alert(
+                "Failed to Load Store Details"
             );
 
         }
@@ -51,125 +48,144 @@ function StoreDetails() {
     const handleRating =
         async () => {
 
-            try {
-
-                await submitRating(
-                    id,
-                    rating
-                );
+            if (!rating) {
 
                 alert(
-                    "Rating Submitted Successfully"
+                    "Please select a rating"
+                );
+
+                return;
+
+            }
+
+            try {
+
+                const result =
+                    await submitRating(
+                        id,
+                        rating
+                    );
+
+                alert(
+                    result.message
                 );
 
                 loadStore();
 
             } catch (error) {
 
-                if (
-                    error?.response?.data?.message ===
-                    "You have already rated this store"
-                ) {
-
-                    const update =
-                        window.confirm(
-                            "Rating already exists. Update it?"
-                        );
-
-                    if (!update) {
-                        return;
-                    }
-
-                    const result =
-                        await updateRating(
-                            id,
-                            rating
-                        );
-
-                    alert(
-                        result.message
-                    );
-
-                    loadStore();
-
-                }
+                alert(
+                    error?.response?.data?.message ||
+                    "Failed to Submit Rating"
+                );
 
             }
 
         };
 
+    if (!store) {
+
+        return (
+
+            <>
+                <Header />
+                <Loader />
+            </>
+
+        );
+
+    }
+
     return (
 
-        <div className="container mt-5">
+        <>
+            <Header />
 
-            <div className="card shadow p-4">
+            <div className="container mt-5">
 
-                <h2>
-                    {store.name}
-                </h2>
+                <div className="row justify-content-center">
 
-                <p>
-                    {store.address}
-                </p>
+                    <div className="col-md-8">
 
-                <h4>
-                    Average Rating:
-                    {" "}
-                    {store.averageRating}
-                </h4>
+                        <div className="card shadow p-4">
 
-                <hr />
+                            <h2 className="mb-3">
+                                {store.name}
+                            </h2>
 
-                <h5>
-                    Rate This Store
-                </h5>
+                            <p className="text-muted">
+                                {store.address}
+                            </p>
 
-                <select
-                    className="form-control mb-3"
-                    value={rating}
-                    onChange={(e) =>
-                        setRating(
-                            e.target.value
-                        )
-                    }
-                >
+                            <hr />
 
-                    <option value="">
-                        Select Rating
-                    </option>
+                            <h4>
+                                ⭐ Average Rating:
+                                {" "}
+                                {store.averageRating}
+                            </h4>
 
-                    <option value="1">
-                        1
-                    </option>
+                            <p>
+                                Total Ratings:
+                                {" "}
+                                {store.totalRatings}
+                            </p>
 
-                    <option value="2">
-                        2
-                    </option>
+                            <hr />
 
-                    <option value="3">
-                        3
-                    </option>
+                            <h5 className="mb-3">
+                                Rate This Store
+                            </h5>
 
-                    <option value="4">
-                        4
-                    </option>
+                            <div className="mb-4">
 
-                    <option value="5">
-                        5
-                    </option>
+                                {
+                                    [1, 2, 3, 4, 5].map(
+                                        (star) => (
 
-                </select>
+                                            <span
+                                                key={star}
+                                                onClick={() =>
+                                                    setRating(
+                                                        star
+                                                    )
+                                                }
+                                                style={{
+                                                    cursor: "pointer",
+                                                    fontSize: "35px",
+                                                    color:
+                                                        star <= rating
+                                                            ? "gold"
+                                                            : "#ccc"
+                                                }}
+                                            >
+                                                ★
+                                            </span>
 
-                <button
-                    className="btn btn-primary"
-                    onClick={handleRating}
-                >
-                    Submit Rating
-                </button>
+                                        )
+                                    )
+                                }
+
+                            </div>
+
+                            <button
+                                className="btn btn-primary"
+                                onClick={
+                                    handleRating
+                                }
+                            >
+                                Submit Rating
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-        </div>
+        </>
 
     );
 }

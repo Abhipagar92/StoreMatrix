@@ -8,11 +8,11 @@ function StoreCard({ store }) {
 
             <div className="card-body">
 
-                <h5>
+                <h5 className="card-title">
                     {store.name}
                 </h5>
 
-                <p>
+                <p className="card-text">
                     {store.address}
                 </p>
 
@@ -32,6 +32,7 @@ function StoreCard({ store }) {
         </div>
 
     );
+
 }
 
 export default StoreCard;
